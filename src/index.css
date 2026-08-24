@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors — Pemuda Dusun 3 Sidodadi design tokens */
+  --color-forest: #123D32;
+  --color-forest-deep: #0C2F27;
+  --color-offwhite: #FCFCF9;
+  --color-warmwhite: #F7F5EF;
+  --color-sage: #DCE5DD;
+  --color-charcoal: #202622;
+  --color-muted: #68716B;
+  --color-border-soft: #E1E4DF;
+  --color-accent: #D99A36;
+  --color-whatsapp: #25D366;
+
+  /* Typography */
+  --font-display: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+
+  /* Layout */
+  --container-content: 1200px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-offwhite);
+    color: var(--color-charcoal);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.035em;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-forest);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .container-content {
+    max-width: var(--container-content);
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.6rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    border-radius: 0.35rem;
+    transition: transform 180ms ease, background-color 180ms ease, color 180ms ease, border-color 180ms ease, opacity 180ms ease;
+  }
+
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .btn-primary {
+    background-color: var(--color-forest);
+    color: var(--color-offwhite);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-forest-deep);
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    color: var(--color-forest);
+    border: 1.5px solid var(--color-forest);
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--color-forest);
+    color: var(--color-offwhite);
+  }
+
+  .btn-ghost-light {
+    background-color: transparent;
+    color: var(--color-offwhite);
+    border: 1.5px solid rgba(252, 252, 249, 0.55);
+  }
+
+  .btn-ghost-light:hover {
+    background-color: rgba(252, 252, 249, 0.12);
+    border-color: var(--color-offwhite);
+  }
+
+  .text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+    color: var(--color-forest);
+  }
+
+  .text-link svg {
+    transition: transform 160ms ease;
+  }
+
+  .text-link:hover svg {
+    transform: translate(3px, -3px);
+  }
+}

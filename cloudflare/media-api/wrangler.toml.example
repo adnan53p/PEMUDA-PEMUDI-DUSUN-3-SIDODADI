@@ -1,0 +1,17 @@
+name = "pemuda-dusun3-media-api"
+main = "src/index.ts"
+compatibility_date = "2026-08-24"
+
+[[r2_buckets]]
+binding = "MEDIA_BUCKET"
+bucket_name = "pemuda-dusun3-media"
+
+[vars]
+# Public custom domain attached to the R2 bucket, used ONLY for public activity photos.
+MEDIA_PUBLIC_BASE_URL = "https://media.example.com"
+# Exact frontend origins, comma-separated. Add production URL later.
+ALLOWED_ORIGINS = "http://localhost:5173"
+
+# Configure these with `npx wrangler secret put ...` instead of committing them:
+# SUPABASE_URL
+# SUPABASE_PUBLISHABLE_KEY

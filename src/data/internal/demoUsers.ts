@@ -1,0 +1,81 @@
+import type { DemoCredential } from '../../auth/types'
+
+export const initialDemoCredentials: DemoCredential[] = [
+  {
+    id: 'usr-superadmin-001',
+    username: 'superadmin',
+    password: 'demo-super',
+    fullName: 'Superadmin Pemuda Dusun 3',
+    role: 'superadmin',
+    initials: 'SA',
+    isActive: true,
+    assignments: [],
+  },
+  {
+    id: 'usr-admin-001',
+    username: 'admin',
+    password: 'demo-admin',
+    fullName: 'Admin Organisasi',
+    role: 'admin',
+    initials: 'AD',
+    isActive: true,
+    assignments: [],
+  },
+  {
+    id: 'usr-humas-budi',
+    username: 'budi.rt01',
+    password: 'demo-budi',
+    fullName: 'Budi Santoso',
+    role: 'humas',
+    initials: 'BS',
+    isActive: true,
+    phone: '08xxxxxxxxxx',
+    assignments: [
+      {
+        id: 'assign-budi-festival',
+        activityId: 'festival-kemerdekaan-2026',
+        activityName: 'Festival Kemerdekaan Dusun 3 Sidodadi 2026',
+        areaLabel: 'RT 01',
+        permissions: ['collect_dues', 'handover_cash'],
+      },
+    ],
+  },
+  {
+    id: 'usr-humas-andi',
+    username: 'andi.belanja',
+    password: 'demo-andi',
+    fullName: 'Andi Saputra',
+    role: 'humas',
+    initials: 'AS',
+    isActive: true,
+    phone: '08xxxxxxxxxx',
+    assignments: [
+      {
+        id: 'assign-andi-festival',
+        activityId: 'festival-kemerdekaan-2026',
+        activityName: 'Festival Kemerdekaan Dusun 3 Sidodadi 2026',
+        areaLabel: 'Tim Pembelanjaan',
+        permissions: ['record_purchases'],
+      },
+    ],
+  },
+  {
+    id: 'usr-humas-rian',
+    username: 'rian.rt02',
+    password: 'demo-rian',
+    fullName: 'Rian Pratama',
+    role: 'humas',
+    initials: 'RP',
+    isActive: true,
+    phone: '08xxxxxxxxxx',
+    assignments: [
+      {
+        id: 'assign-rian-festival',
+        activityId: 'festival-kemerdekaan-2026',
+        activityName: 'Festival Kemerdekaan Dusun 3 Sidodadi 2026',
+        areaLabel: 'RT 02',
+        permissions: ['collect_dues', 'handover_cash'],
+      },
+    ],
+  },
+]

@@ -1,0 +1,18 @@
+PHASE 04 EXTERNAL MEDIA READY
+
+- Supabase Storage: NOT USED
+- Activity photos: Cloudflare R2 via authenticated Cloudflare Worker
+- Transaction evidence: private Cloudflare R2 object via authenticated Worker
+- Video: YouTube / Google Drive URL only
+- Supabase: metadata + relational references only
+- SQL patch: docs/SUPABASE_PHASE04_MEDIA_APPLY.sql
+- Worker source: cloudflare/media-api/
+- Frontend env: VITE_MEDIA_API_URL
+
+Static validation:
+- Supabase Phase 03 audit: PASS
+- External media audit: PASS
+- TypeScript parse/transpile: PASS
+- Relative local import resolver: PASS
+
+Full npm build was not certified in this environment because dependency installation timed out. Run npm install + npm run build on the development PC.

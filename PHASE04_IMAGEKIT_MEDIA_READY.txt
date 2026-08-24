@@ -1,0 +1,12 @@
+PHASE 04 IMAGEKIT EXTERNAL MEDIA READY
+
+- Supabase Storage: NOT USED
+- Activity photos: ImageKit public files via authenticated Supabase Edge Function
+- Transaction evidence: ImageKit private files + 5-minute signed URL
+- Video: YouTube / Google Drive URL only
+- Supabase: metadata + relational references + external_file_id only
+- SQL patch: docs/SUPABASE_PHASE04_IMAGEKIT_APPLY.sql
+- Edge Function: supabase/functions/imagekit-media/
+- Setup guide: docs/IMAGEKIT_MEDIA_SETUP.md
+
+Run npm run audit:external-media before release.

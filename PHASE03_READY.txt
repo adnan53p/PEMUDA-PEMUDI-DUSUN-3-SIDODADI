@@ -1,0 +1,13 @@
+PEMUDA DUSUN 3 SIDODADI — SUPABASE PHASE 03
+Status: Source package prepared for Operations + Finance integration.
+
+Deployment:
+1. Keep/copy your existing local .env from the Phase 02B project.
+2. Supabase Dashboard -> SQL Editor.
+3. Run docs/SUPABASE_PHASE03_APPLY.sql ONCE.
+4. Do not rerun Phase 01 migrations on the existing project.
+5. Run: npm install
+6. Run: npm run audit:supabase-phase03
+7. Run: npm run dev
+
+Auth accounts and manage-account Edge Function from Phase 02B remain compatible.
