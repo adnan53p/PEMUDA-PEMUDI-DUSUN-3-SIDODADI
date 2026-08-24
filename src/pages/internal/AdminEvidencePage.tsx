@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { ChevronDown, Eye, FileImage, FileText, Search } from 'lucide-react'
+import { ChevronDown, Eye, FileText, Search } from 'lucide-react'
 import InternalLayout from '../../components/internal/InternalLayout'
 import InternalNotice from '../../components/internal/InternalNotice'
 import AdminPageIntro from '../../components/internal/AdminPageIntro'
