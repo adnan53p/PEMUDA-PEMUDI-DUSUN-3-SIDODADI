@@ -1,6 +1,7 @@
 import { Archive, ChevronDown, Users } from 'lucide-react'
 import PageIntro from '../components/PageIntro'
 import { organizationRoles } from '../data/organizationData'
+import { useSiteContent } from '../prototype/SiteContentContext'
 
 function RoleCard({ title, name, featured = false, compact = false }: { title: string; name: string; featured?: boolean; compact?: boolean }) {
   const hasOfficialName = name && name !== 'Nama belum diisi'
@@ -20,6 +21,7 @@ function RoleCard({ title, name, featured = false, compact = false }: { title: s
 }
 
 export default function OrganizationPage() {
+  const { siteMedia } = useSiteContent()
   const byId = Object.fromEntries(organizationRoles.map((role) => [role.id, role]))
 
   return (
@@ -47,7 +49,7 @@ export default function OrganizationPage() {
               <p className="mt-4 max-w-md text-sm leading-relaxed text-muted">Nama pengurus belum diberikan sebagai data resmi. Karena itu bagan menampilkan jabatan terlebih dahulu tanpa membuat identitas fiktif.</p>
             </div>
             <div className="overflow-hidden rounded-sm">
-              <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1600&auto=format&fit=crop" alt="Kebersamaan pemuda dalam organisasi komunitas" loading="lazy" className="h-56 w-full object-cover md:h-72" />
+              <img src={siteMedia.organization.url} alt="Kebersamaan pemuda dalam organisasi komunitas" loading="lazy" className="h-56 w-full object-cover md:h-72" />
             </div>
           </div>
 

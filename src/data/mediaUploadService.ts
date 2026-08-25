@@ -1,6 +1,6 @@
 import { supabase } from '../lib/supabaseClient'
 
-export type MediaUploadScope = 'activity-photo' | 'transaction-evidence'
+export type MediaUploadScope = 'activity-photo' | 'transaction-evidence' | 'site-image'
 
 export interface UploadedExternalMedia {
   url: string
@@ -21,12 +21,12 @@ const MAX_EVIDENCE_BYTES = 8 * 1024 * 1024
 
 function validateFile(file: File, scope: MediaUploadScope) {
   if (!file.size) return 'File kosong tidak dapat diunggah.'
-  const allowed = scope === 'activity-photo' ? ACTIVITY_PHOTO_TYPES : EVIDENCE_TYPES
-  const maxBytes = scope === 'activity-photo' ? MAX_ACTIVITY_PHOTO_BYTES : MAX_EVIDENCE_BYTES
+  const allowed = scope === 'transaction-evidence' ? EVIDENCE_TYPES : ACTIVITY_PHOTO_TYPES
+  const maxBytes = scope === 'transaction-evidence' ? MAX_EVIDENCE_BYTES : MAX_ACTIVITY_PHOTO_BYTES
   if (!allowed.has(file.type)) {
-    return scope === 'activity-photo'
-      ? 'Foto harus JPG, PNG, atau WebP.'
-      : 'Bukti harus JPG, PNG, WebP, atau PDF.'
+    return scope === 'transaction-evidence'
+      ? 'Bukti harus JPG, PNG, WebP, atau PDF.'
+      : 'Foto harus JPG, PNG, atau WebP.'
   }
   if (file.size > maxBytes) return `Ukuran file maksimal ${Math.round(maxBytes / 1024 / 1024)} MB.`
   return ''
@@ -61,14 +61,16 @@ async function invokeImageKit(body: FormData | Record<string, unknown>) {
 export async function uploadExternalMedia(input: {
   file: File
   scope: MediaUploadScope
-  activityId: string
+  activityId?: string
   transactionId?: string
+  siteSlot?: 'hero' | 'profile' | 'organization'
 }): Promise<UploadedExternalMedia> {
   if (!MEDIA_UPLOAD_CONFIGURED) throw new Error('Supabase belum dikonfigurasi sehingga upload ImageKit belum dapat digunakan.')
 
   const validation = validateFile(input.file, input.scope)
   if (validation) throw new Error(validation)
-  if (!input.activityId) throw new Error('Kegiatan tidak ditemukan.')
+  if (input.scope !== 'site-image' && !input.activityId) throw new Error('Kegiatan tidak ditemukan.')
+  if (input.scope === 'site-image' && !input.siteSlot) throw new Error('Slot foto website tidak ditemukan.')
   if (input.scope === 'transaction-evidence' && !input.transactionId) {
     throw new Error('ID transaksi wajib tersedia sebelum mengunggah bukti.')
   }
@@ -76,7 +78,8 @@ export async function uploadExternalMedia(input: {
   const form = new FormData()
   form.set('action', 'upload')
   form.set('scope', input.scope)
-  form.set('activityId', input.activityId)
+  if (input.activityId) form.set('activityId', input.activityId)
+  if (input.siteSlot) form.set('siteSlot', input.siteSlot)
   if (input.transactionId) form.set('transactionId', input.transactionId)
   form.set('file', input.file)
 
@@ -98,8 +101,9 @@ export async function uploadExternalMedia(input: {
 export async function deleteExternalMedia(input: {
   externalFileId?: string
   scope: MediaUploadScope
-  activityId: string
+  activityId?: string
   transactionId?: string
+  siteSlot?: 'hero' | 'profile' | 'organization'
 }) {
   if (!input.externalFileId || !MEDIA_UPLOAD_CONFIGURED) return
   await invokeImageKit({
@@ -108,6 +112,7 @@ export async function deleteExternalMedia(input: {
     scope: input.scope,
     activityId: input.activityId,
     transactionId: input.transactionId,
+    siteSlot: input.siteSlot,
   })
 }
 

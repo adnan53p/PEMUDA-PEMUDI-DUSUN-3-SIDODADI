@@ -1,9 +1,12 @@
 import { ArrowUpRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { documentationImages } from '../data/mockData'
+import { usePublicActivities } from '../prototype/publicActivitySelectors'
 
 export default function DocumentationSection() {
-  const items = documentationImages.slice(0, 4)
+  const activities = usePublicActivities()
+  const items = activities
+    .flatMap((activity) => activity.gallery.map((image) => ({ image, caption: activity.shortTitle, activityId: activity.id })))
+    .slice(0, 4)
   if (!items.length) return null
 
   return (
@@ -19,12 +22,14 @@ export default function DocumentationSection() {
 
         <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
           {items.map((item, index) => (
-            <figure key={`${item.caption}-${index}`} className="group bg-white">
-              <div className="relative overflow-hidden bg-charcoal">
-                <img src={item.image} alt={item.caption} loading="lazy" className={`w-full object-cover transition-transform duration-700 group-hover:scale-[1.02] ${index === 0 ? 'aspect-[4/5]' : 'aspect-[4/5]'}`}/>
-                <div className="absolute bottom-0 left-0 h-1 w-16 bg-accent" />
-              </div>
-              <figcaption className="border-x border-b border-border-soft px-4 py-4 text-sm font-medium leading-6 text-charcoal">{item.caption}</figcaption>
+            <figure key={`${item.activityId}-${index}`} className="group bg-white">
+              <Link to={`/kegiatan/${item.activityId}`} className="block">
+                <div className="relative overflow-hidden bg-charcoal">
+                  <img src={item.image} alt={item.caption} loading="lazy" className="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"/>
+                  <div className="absolute bottom-0 left-0 h-1 w-16 bg-accent" />
+                </div>
+                <figcaption className="border-x border-b border-border-soft px-4 py-4 text-sm font-medium leading-6 text-charcoal">{item.caption}</figcaption>
+              </Link>
             </figure>
           ))}
         </div>

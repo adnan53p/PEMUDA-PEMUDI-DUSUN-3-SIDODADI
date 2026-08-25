@@ -2,6 +2,7 @@ import { ArrowDownRight, ArrowUpRight, Quote } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import PageIntro from '../components/PageIntro'
 import { organizationProfile } from '../data/organizationData'
+import { useSiteContent } from '../prototype/SiteContentContext'
 
 const journeySteps = [
   { label: 'Identitas', title: 'Organisasi dan periode', description: 'Nama, struktur, dan periode menjadi fondasi arsip yang mudah diteruskan saat kepengurusan berganti.' },
@@ -10,6 +11,7 @@ const journeySteps = [
 ]
 
 export default function ProfilePage() {
+  const { siteMedia } = useSiteContent()
   return (
     <div className="bg-offwhite">
       <PageIntro
@@ -28,7 +30,7 @@ export default function ProfilePage() {
         <div className="container-content grid gap-10 py-14 md:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-14">
           <div className="overflow-hidden rounded-sm">
             <img
-              src="https://images.unsplash.com/photo-1660749411531-1efe3e9c6fd1?q=80&w=1800&auto=format&fit=crop"
+              src={siteMedia.profile.url}
               alt="Kebersamaan pemuda dalam kegiatan komunitas"
               loading="lazy"
               className="h-[26rem] w-full object-cover md:h-[34rem]"

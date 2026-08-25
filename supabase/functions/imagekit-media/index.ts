@@ -13,9 +13,10 @@ const EVIDENCE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'applic
 const MAX_PHOTO_BYTES = 8 * 1024 * 1024
 const MAX_EVIDENCE_BYTES = 8 * 1024 * 1024
 const ROOT_FOLDER = '/pemuda-dusun3'
+const SITE_SLOTS = new Set(['hero', 'profile', 'organization'])
 
 type Role = 'superadmin' | 'admin' | 'humas'
-type UploadScope = 'activity-photo' | 'transaction-evidence'
+type UploadScope = 'activity-photo' | 'transaction-evidence' | 'site-image'
 
 interface Actor {
   id: string
@@ -69,6 +70,10 @@ async function requireActor(req: Request): Promise<Actor> {
   if (profileError || !profile?.is_active || !profile.role) throw new Response('ACCOUNT_INACTIVE', { status: 403 })
 
   return { id: userData.user.id, role: profile.role as Role, client }
+}
+
+async function assertSiteSuperadmin(actor: Actor) {
+  if (actor.role !== 'superadmin') throw new Response('PERMISSION_DENIED', { status: 403 })
 }
 
 async function assertActivityAdmin(actor: Actor, activityId: string) {
@@ -205,9 +210,10 @@ async function handleUpload(req: Request, actor: Actor) {
   const scope = String(form.get('scope') ?? '') as UploadScope
   const activityId = String(form.get('activityId') ?? '')
   const transactionId = String(form.get('transactionId') ?? '')
+  const siteSlot = String(form.get('siteSlot') ?? '')
   const file = form.get('file')
 
-  if (!UUID_RE.test(activityId)) return json(400, { error: 'INVALID_ACTIVITY_ID', message: 'ID kegiatan tidak valid.' })
+  if (scope !== 'site-image' && !UUID_RE.test(activityId)) return json(400, { error: 'INVALID_ACTIVITY_ID', message: 'ID kegiatan tidak valid.' })
   if (!(file instanceof File)) return json(400, { error: 'FILE_REQUIRED', message: 'File wajib dipilih.' })
 
   if (scope === 'activity-photo') {
@@ -215,6 +221,14 @@ async function handleUpload(req: Request, actor: Actor) {
     if (!PHOTO_TYPES.has(file.type)) return json(400, { error: 'INVALID_PHOTO_TYPE', message: 'Foto harus JPG, PNG, atau WebP.' })
     if (!file.size || file.size > MAX_PHOTO_BYTES) return json(413, { error: 'PHOTO_TOO_LARGE', message: 'Foto maksimal 8 MB.' })
     return json(200, await imageKitUpload(file, `${ROOT_FOLDER}/activities/${activityId}/photos`, false))
+  }
+
+  if (scope === 'site-image') {
+    await assertSiteSuperadmin(actor)
+    if (!SITE_SLOTS.has(siteSlot)) return json(400, { error: 'INVALID_SITE_SLOT', message: 'Slot foto website tidak valid.' })
+    if (!PHOTO_TYPES.has(file.type)) return json(400, { error: 'INVALID_PHOTO_TYPE', message: 'Foto harus JPG, PNG, atau WebP.' })
+    if (!file.size || file.size > MAX_PHOTO_BYTES) return json(413, { error: 'PHOTO_TOO_LARGE', message: 'Foto maksimal 8 MB.' })
+    return json(200, await imageKitUpload(file, `${ROOT_FOLDER}/site/${siteSlot}`, false))
   }
 
   if (scope === 'transaction-evidence') {
@@ -234,15 +248,22 @@ async function handleDelete(req: Request, actor: Actor) {
     scope?: UploadScope
     activityId?: string
     transactionId?: string
+    siteSlot?: string
   } | null
   const fileId = body?.externalFileId?.trim() ?? ''
   const scope = body?.scope
   const activityId = body?.activityId?.trim() ?? ''
   const transactionId = body?.transactionId?.trim() ?? ''
-  if (!fileId || !scope || !UUID_RE.test(activityId)) return json(400, { error: 'INVALID_DELETE_INPUT', message: 'Data file yang akan dihapus tidak lengkap.' })
+  const siteSlot = body?.siteSlot?.trim() ?? ''
+  if (!fileId || !scope) return json(400, { error: 'INVALID_DELETE_INPUT', message: 'Data file yang akan dihapus tidak lengkap.' })
+  if (scope !== 'site-image' && !UUID_RE.test(activityId)) return json(400, { error: 'INVALID_DELETE_INPUT', message: 'Data file yang akan dihapus tidak lengkap.' })
 
   let expectedPrefix = ''
-  if (scope === 'activity-photo') {
+  if (scope === 'site-image') {
+    await assertSiteSuperadmin(actor)
+    if (!SITE_SLOTS.has(siteSlot)) return json(400, { error: 'INVALID_SITE_SLOT', message: 'Slot foto website tidak valid.' })
+    expectedPrefix = `${ROOT_FOLDER}/site/${siteSlot}/`
+  } else if (scope === 'activity-photo') {
     await assertActivityAdmin(actor, activityId)
     expectedPrefix = `${ROOT_FOLDER}/activities/${activityId}/photos/`
   } else if (scope === 'transaction-evidence') {

@@ -3,6 +3,7 @@ import { SITE_IDENTITY } from '../config/site'
 import { homepageSectionItems } from '../data/internal/cmsData'
 import { mainNavigation, type NavigationItem } from '../data/navigation'
 import { legalityDocuments, type LegalityDocument } from '../data/organizationData'
+import { fetchSiteMedia, type SiteMediaRecord, type SiteMediaSlot } from '../data/siteMediaRepository'
 
 export interface SiteColors {
   primary: string
@@ -40,6 +41,8 @@ export interface ManagedDocument extends LegalityDocument {
   publicVisible: boolean
 }
 
+export type SiteMediaMap = Record<SiteMediaSlot, SiteMediaRecord>
+
 interface SiteContentContextValue {
   identity: SiteIdentity
   setIdentity: (value: SiteIdentity) => void
@@ -53,6 +56,8 @@ interface SiteContentContextValue {
   setNavigation: (value: ManagedNavigationItem[]) => void
   documents: ManagedDocument[]
   setDocuments: (value: ManagedDocument[]) => void
+  siteMedia: SiteMediaMap
+  refreshSiteMedia: () => Promise<void>
   isSectionVisible: (id: string) => boolean
 }
 
@@ -86,6 +91,31 @@ const initialDocuments: ManagedDocument[] = legalityDocuments.map((document) => 
   publicVisible: document.id === 'contoh-preview',
 }))
 
+const initialSiteMedia: SiteMediaMap = {
+  hero: {
+    slot: 'hero',
+    title: 'Foto utama beranda',
+    url: 'https://images.unsplash.com/photo-1660749414248-a59e87e49862?q=80&w=2200&auto=format&fit=crop',
+    externalFileId: '',
+    publicVisible: true,
+  },
+  profile: {
+    slot: 'profile',
+    title: 'Foto profil organisasi',
+    url: 'https://images.unsplash.com/photo-1660749411531-1efe3e9c6fd1?q=80&w=1800&auto=format&fit=crop',
+    externalFileId: '',
+    publicVisible: true,
+  },
+  organization: {
+    slot: 'organization',
+    title: 'Foto kepengurusan',
+    url: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1600&auto=format&fit=crop',
+    externalFileId: '',
+    publicVisible: true,
+  },
+}
+
+
 const SiteContentContext = createContext<SiteContentContextValue | null>(null)
 
 export function SiteContentProvider({ children }: { children: ReactNode }) {
@@ -95,6 +125,26 @@ export function SiteContentProvider({ children }: { children: ReactNode }) {
   const [colors, setColors] = useState<SiteColors>(initialColors)
   const [navigation, setNavigation] = useState<ManagedNavigationItem[]>(initialNavigation)
   const [documents, setDocuments] = useState<ManagedDocument[]>(initialDocuments)
+  const [siteMedia, setSiteMedia] = useState<SiteMediaMap>(initialSiteMedia)
+
+
+  const refreshSiteMedia = async () => {
+    try {
+      const rows = await fetchSiteMedia()
+      if (!rows.length) return
+      setSiteMedia((current) => {
+        const next = { ...current }
+        rows.forEach((row) => { next[row.slot] = row })
+        return next
+      })
+    } catch (error) {
+      console.warn('Site media belum dapat dimuat.', error)
+    }
+  }
+
+  useEffect(() => {
+    void refreshSiteMedia()
+  }, [])
 
   useEffect(() => {
     const root = document.documentElement
@@ -119,8 +169,10 @@ export function SiteContentProvider({ children }: { children: ReactNode }) {
     setNavigation,
     documents,
     setDocuments,
+    siteMedia,
+    refreshSiteMedia,
     isSectionVisible: (id: string) => sections.find((section) => section.id === id)?.visible ?? true,
-  }), [identity, homepage, sections, colors, navigation, documents])
+  }), [identity, homepage, sections, colors, navigation, documents, siteMedia])
 
   return <SiteContentContext.Provider value={value}>{children}</SiteContentContext.Provider>
 }

@@ -3,6 +3,7 @@ import { ExternalLink, Eye, RotateCcw, Save } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import InternalLayout from '../../components/internal/InternalLayout'
 import InternalNotice from '../../components/internal/InternalNotice'
+import SiteMediaManager from '../../components/internal/SiteMediaManager'
 import { useSiteContent, type HomepageContent, type ManagedHomepageSection } from '../../prototype/SiteContentContext'
 
 export default function WebsiteContentPage() {
@@ -38,6 +39,8 @@ export default function WebsiteContentPage() {
       </div></div>
       <div className="overflow-hidden border border-border-soft bg-white"><div className="border-b border-border-soft px-5 py-5 sm:px-6"><p className="eyebrow text-forest">PREVIEW DRAFT</p><h2 className="mt-2 text-xl font-extrabold text-charcoal">Pratinjau sebelum Publish.</h2></div><div className="bg-forest-deep p-6 text-offwhite sm:p-8"><p className="text-[0.66rem] font-extrabold uppercase tracking-[0.13em] text-sage">ORGANISASI PEMUDA DUSUN 3 · SIDODADI</p><p className="mt-6 whitespace-pre-line text-4xl font-extrabold leading-[0.94] tracking-[-0.05em]">{draftHomepage.headline || 'Headline kosong'}</p><p className="mt-5 text-sm leading-relaxed text-offwhite/70">{draftHomepage.subheadline || 'Subheadline kosong'}</p></div><div className="flex flex-wrap gap-3 px-5 py-4 sm:px-6"><Link to="/" className="btn btn-secondary"><Eye size={16}/> Lihat versi publik <ExternalLink size={14}/></Link></div></div>
     </section>
+
+    <SiteMediaManager />
 
     <section className="mt-6 border border-border-soft bg-white"><div className="border-b border-border-soft px-5 py-5 sm:px-6"><p className="eyebrow text-forest">SECTION HOMEPAGE · DRAFT</p><h2 className="mt-2 text-xl font-extrabold text-charcoal">Atur bagian yang ditampilkan.</h2><p className="mt-2 text-xs leading-relaxed text-muted">Tombol hanya mengubah Draft. Website publik baru berubah setelah Publish.</p></div><div className="divide-y divide-border-soft">{draftSections.map((section) => <div key={section.id} className="flex gap-4 px-5 py-4 sm:items-center sm:px-6"><div className="min-w-0 flex-1"><p className="text-sm font-extrabold text-charcoal">{section.title}</p><p className="mt-1 text-xs leading-relaxed text-muted">{section.description}</p></div><button type="button" onClick={() => setDraftSections(draftSections.map((item) => item.id === section.id ? { ...item, visible: !item.visible } : item))} className={`shrink-0 px-3 py-2 text-[0.68rem] font-extrabold uppercase tracking-[0.08em] ${section.visible ? 'bg-sage/65 text-forest' : 'bg-warmwhite text-muted'}`}>{section.visible ? 'Tampil' : 'Disembunyikan'}</button></div>)}</div></section>
   </InternalLayout>

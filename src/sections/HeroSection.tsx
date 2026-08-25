@@ -1,10 +1,9 @@
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { mediaAssets } from '../data/mockData'
 import { useSiteContent } from '../prototype/SiteContentContext'
 
 export default function HeroSection() {
-  const { homepage, identity } = useSiteContent()
+  const { homepage, identity, siteMedia } = useSiteContent()
 
   return (
     <section id="beranda" className="scroll-mt-20 bg-white">
@@ -36,7 +35,7 @@ export default function HeroSection() {
         <div className="relative">
           <div className="absolute -left-3 top-8 z-10 h-[70%] w-1 bg-accent" aria-hidden="true" />
           <figure className="relative overflow-hidden bg-warmwhite">
-            <img src={mediaAssets.hero} alt={`Kegiatan ${identity.name}`} className="aspect-[5/4] w-full object-cover lg:aspect-[4/5]" fetchPriority="high" decoding="async" />
+            <img src={siteMedia.hero.url} alt={`Kegiatan ${identity.name}`} className="aspect-[5/4] w-full object-cover lg:aspect-[4/5]" fetchPriority="high" decoding="async" />
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent px-6 pb-6 pt-20 text-white md:px-8 md:pb-8">
               <p className="text-[11px] font-semibold uppercase tracking-[.16em] text-white/75">#MulaiDariLingkungan</p>
               <p className="mt-2 max-w-md text-xl font-semibold leading-snug tracking-[-.03em]">Kegiatan nyata, informasi terbuka, dan kolaborasi warga.</p>
