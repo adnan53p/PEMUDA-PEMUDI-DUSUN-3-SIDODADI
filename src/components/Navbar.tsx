@@ -24,9 +24,8 @@ export default function Navbar() {
   const visibleNavigation = useMemo(() => navigation.filter((item) => item.visible), [navigation])
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8)
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
+    const onScroll = () => setScrolled(window.scrollY > 12)
+    onScroll(); window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
@@ -35,7 +34,6 @@ export default function Navbar() {
     const configuredSectionIds = visibleNavigation.filter((item) => item.kind === 'home-section').map((item) => item.sectionId)
     const sectionIds = Array.from(new Set(['beranda', ...configuredSectionIds, 'kegiatan', 'program', 'dokumentasi']))
     const sections = sectionIds.map((id) => document.getElementById(id)).filter((section): section is HTMLElement => Boolean(section))
-    if (!sections.length) return
     const observer = new IntersectionObserver((entries) => {
       const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
       if (visible?.target.id) setActiveSection(visible.target.id)
@@ -44,42 +42,46 @@ export default function Navbar() {
     return () => observer.disconnect()
   }, [location.pathname, visibleNavigation])
 
-  useEffect(() => {
-    setMobileOpen(false)
-    if (location.pathname !== '/') window.scrollTo({ top: 0, behavior: 'auto' })
-  }, [location.pathname])
+  useEffect(() => { setMobileOpen(false); if (location.pathname !== '/') window.scrollTo({ top: 0, behavior: 'auto' }) }, [location.pathname])
 
   return (
-    <header className={`sticky top-0 z-50 bg-offwhite/95 backdrop-blur-md transition-[box-shadow,border-color] duration-200 ${scrolled ? 'border-b border-border-soft shadow-[0_8px_24px_rgba(18,61,50,0.05)]' : 'border-b border-transparent'}`}>
-      <div className="container-content flex items-center justify-between py-4">
+    <header className={`sticky top-0 z-50 border-b transition-colors ${scrolled ? 'border-border-soft bg-white/96 backdrop-blur-xl' : 'border-transparent bg-white/94 backdrop-blur-md'}`}>
+      <div className="container-content flex h-[72px] items-center justify-between">
         <Link to="/" className="flex items-center gap-3" aria-label={`Kembali ke beranda ${identity.name}`}>
-          <span className="flex h-9 w-9 items-center justify-center rounded-md bg-forest text-sm font-bold tracking-wide text-offwhite">PD</span>
-          <span className="hidden text-sm font-extrabold tracking-[0.035em] text-charcoal sm:block md:text-[0.98rem]">{identity.name}</span>
-          <span className="text-sm font-bold tracking-wide text-charcoal sm:hidden">{identity.shortName}</span>
+          <span className="grid h-10 w-10 grid-cols-2 overflow-hidden border border-border-soft bg-white" aria-hidden="true">
+            <span className="bg-accent" />
+            <span className="bg-forest" />
+            <span className="col-span-2 flex items-center justify-center text-[10px] font-bold tracking-[-.02em] text-charcoal">P3</span>
+          </span>
+          <div className="hidden sm:block">
+            <p className="text-[13px] font-semibold leading-tight tracking-[-.02em] text-charcoal">{identity.name}</p>
+            <p className="mt-1 text-[10px] font-medium uppercase tracking-[.15em] text-muted">Sidodadi</p>
+          </div>
+          <span className="text-sm font-semibold text-charcoal sm:hidden">{identity.shortName}</span>
         </Link>
 
-        <nav className="hidden items-center gap-4 xl:flex" aria-label="Navigasi utama">
+        <nav className="hidden items-center gap-7 xl:flex" aria-label="Navigasi utama">
           {visibleNavigation.map((item) => {
             const active = getItemActive(item, location.pathname, activeSection)
-            return <Link key={`${item.kind}-${item.to}`} to={item.to} aria-current={active ? 'page' : undefined} className={`relative py-2 text-[0.82rem] font-semibold transition-colors after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:bg-forest after:transition-transform ${active ? 'text-forest after:scale-x-100' : 'text-charcoal/70 after:scale-x-0 hover:text-forest hover:after:scale-x-100'}`}>{item.label}</Link>
+            return <Link key={`${item.kind}-${item.to}`} to={item.to} className={`relative py-2 text-[.79rem] font-medium transition-colors ${active ? 'text-charcoal' : 'text-muted hover:text-charcoal'}`}>
+              {item.label}
+              {active && <span className="absolute inset-x-0 -bottom-[18px] h-0.5 bg-accent" />}
+            </Link>
           })}
         </nav>
 
-        <div className="hidden items-center gap-3 xl:flex">
-          <Link to={workspacePath} className="inline-flex items-center gap-1.5 px-2 py-2 text-[0.82rem] font-semibold text-charcoal/70 transition-colors hover:text-forest">{user ? <LayoutDashboard size={15} /> : <LogIn size={15} />} {user ? 'Workspace' : 'Masuk'}</Link>
-          <Link to="/keuangan" className="btn btn-primary">Transparansi</Link>
+        <div className="hidden items-center gap-4 xl:flex">
+          <Link to={workspacePath} className="inline-flex items-center gap-1.5 text-[.79rem] font-medium text-muted transition-colors hover:text-charcoal">{user ? <LayoutDashboard size={15}/> : <LogIn size={15}/>} {user ? 'Workspace' : 'Masuk'}</Link>
+          <Link to="/keuangan" className="btn btn-primary !min-h-10 !px-4 !py-2">Transparansi</Link>
         </div>
 
-        <button type="button" aria-label={mobileOpen ? 'Tutup menu' : 'Buka menu'} aria-expanded={mobileOpen} aria-controls="mobile-navigation" className="flex h-10 w-10 items-center justify-center rounded-md text-charcoal transition-colors hover:bg-sage/30 xl:hidden" onClick={() => setMobileOpen((value) => !value)}>{mobileOpen ? <X size={22} /> : <Menu size={22} />}</button>
+        <button type="button" aria-label={mobileOpen ? 'Tutup menu' : 'Buka menu'} className="flex h-10 w-10 items-center justify-center border border-border-soft bg-white xl:hidden" onClick={() => setMobileOpen((v) => !v)}>{mobileOpen ? <X size={21}/> : <Menu size={21}/>}</button>
       </div>
 
-      {mobileOpen && <div id="mobile-navigation" className="border-t border-border-soft bg-offwhite xl:hidden"><nav className="container-content flex flex-col gap-1 py-4" aria-label="Navigasi mobile">
-        {visibleNavigation.map((item) => {
-          const active = getItemActive(item, location.pathname, activeSection)
-          return <Link key={`${item.kind}-${item.to}`} to={item.to} aria-current={active ? 'page' : undefined} className={`rounded-md px-3 py-3 text-[0.95rem] font-semibold transition-colors ${active ? 'bg-sage/50 text-forest' : 'text-charcoal hover:bg-sage/30'}`}>{item.label}</Link>
-        })}
-        <div className="mt-2 grid grid-cols-2 gap-2"><Link to={workspacePath} className="btn btn-secondary justify-center">{user ? <LayoutDashboard size={16} /> : <LogIn size={16} />} {user ? 'Workspace' : 'Masuk'}</Link><Link to="/keuangan" className="btn btn-primary justify-center">Transparansi</Link></div>
-      </nav></div>}
+      {mobileOpen && <div className="border-t border-border-soft bg-white xl:hidden"><nav className="container-content flex flex-col py-4">{visibleNavigation.map((item) => {
+        const active = getItemActive(item, location.pathname, activeSection)
+        return <Link key={`${item.kind}-${item.to}`} to={item.to} className={`border-b border-border-soft px-1 py-3 text-sm font-medium ${active ? 'text-forest' : 'text-charcoal'}`}>{item.label}</Link>
+      })}<div className="mt-4 grid grid-cols-2 gap-2"><Link to={workspacePath} className="btn btn-secondary">{user ? 'Workspace' : 'Masuk'}</Link><Link to="/keuangan" className="btn btn-primary">Transparansi</Link></div></nav></div>}
     </header>
   )
 }

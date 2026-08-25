@@ -27,7 +27,3 @@ dist-ssr
 .env
 .env.*
 !.env.example
-
-# Deployment / Supabase local cache
-.vercel/
-supabase/.temp/

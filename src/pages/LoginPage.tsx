@@ -61,7 +61,7 @@ export default function LoginPage() {
 
           <div className="max-w-xl py-16 lg:py-10">
             <p className="eyebrow text-sage">AREA PENGURUS</p>
-            <h1 className="mt-5 text-5xl font-extrabold leading-[0.97] tracking-[-0.055em] sm:text-6xl lg:text-7xl">Satu ruang kerja untuk kegiatan yang lebih tertib.</h1>
+            <h1 className="mt-5 text-5xl font-semibold leading-[0.97] tracking-[-0.055em] sm:text-6xl lg:text-7xl">Satu ruang kerja untuk kegiatan yang lebih tertib.</h1>
             <p className="mt-7 max-w-lg text-base leading-relaxed text-offwhite/68">Superadmin mengelola website dan platform. Admin mengelola operasional organisasi. Humas bekerja di lapangan sesuai kegiatan dan permission yang ditugaskan.</p>
 
             <div className="mt-10 grid gap-3 text-sm sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
@@ -80,22 +80,22 @@ export default function LoginPage() {
         <section className="flex items-center justify-center px-5 py-10 sm:px-10 lg:px-16">
           <div className="w-full max-w-md">
             <div className="flex items-center gap-3">
-              <span className="flex h-11 w-11 items-center justify-center rounded-md bg-forest text-sm font-extrabold text-offwhite">PD</span>
+              <span className="flex h-11 w-11 items-center justify-center rounded-md bg-forest text-sm font-semibold text-offwhite">PD</span>
               <div>
-                <p className="text-sm font-extrabold tracking-[0.025em] text-charcoal">PEMUDA DUSUN 3 SIDODADI</p>
+                <p className="text-sm font-semibold tracking-[0.025em] text-charcoal">PEMUDA DUSUN 3 SIDODADI</p>
                 <p className="text-xs text-muted">Portal Pengurus</p>
               </div>
             </div>
 
             <div className="mt-10">
               <p className="eyebrow text-forest">LOGIN PENGURUS</p>
-              <h2 className="mt-3 text-3xl font-extrabold text-charcoal sm:text-4xl">Masuk ke ruang kerja sesuai peran Anda.</h2>
+              <h2 className="mt-3 text-3xl font-semibold text-charcoal sm:text-4xl">Masuk ke ruang kerja sesuai peran Anda.</h2>
               <p className="mt-3 text-sm leading-relaxed text-muted">Login menggunakan akun Supabase yang aktif. Hak akses dibaca dari profil dan role server, bukan dari data demo di browser.</p>
             </div>
 
             <form onSubmit={submit} className="mt-8 space-y-5">
               <fieldset>
-                <legend className="mb-2 block text-xs font-extrabold uppercase tracking-[0.11em] text-muted">Pilih akses</legend>
+                <legend className="mb-2 block text-xs font-semibold uppercase tracking-[0.11em] text-muted">Pilih akses</legend>
                 <div className="grid gap-2 sm:grid-cols-3">
                   {roleOptions.map((option) => {
                     const active = selectedRole === option.role
@@ -108,9 +108,9 @@ export default function LoginPage() {
                           setSelectedRole(option.role)
                           setError('')
                         }}
-                        className={`min-h-20 border px-3 py-3 text-left transition-colors ${active ? 'border-forest bg-[#F0F6F2] text-forest' : 'border-border-soft bg-white text-charcoal hover:border-forest/45'}`}
+                        className={`min-h-20 border px-3 py-3 text-left transition-colors ${active ? 'border-forest bg-[#EEF2F7] text-forest' : 'border-border-soft bg-white text-charcoal hover:border-forest/45'}`}
                       >
-                        <span className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.07em]">
+                        <span className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.07em]">
                           <ShieldCheck size={15} className={active ? 'text-forest' : 'text-muted'} />
                           {option.title}
                         </span>
@@ -123,7 +123,7 @@ export default function LoginPage() {
               </fieldset>
 
               <label className="block">
-                <span className="mb-2 block text-xs font-extrabold uppercase tracking-[0.11em] text-muted">Email</span>
+                <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.11em] text-muted">Email</span>
                 <div className="flex h-13 items-center border border-border-soft bg-white px-4 focus-within:border-forest">
                   <Mail size={18} className="mr-3 text-muted" />
                   <input
@@ -138,7 +138,7 @@ export default function LoginPage() {
               </label>
 
               <label className="block">
-                <span className="mb-2 block text-xs font-extrabold uppercase tracking-[0.11em] text-muted">Kata sandi</span>
+                <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.11em] text-muted">Kata sandi</span>
                 <div className="flex h-13 items-center border border-border-soft bg-white px-4 focus-within:border-forest">
                   <LockKeyhole size={18} className="mr-3 text-muted" />
                   <input
@@ -155,7 +155,7 @@ export default function LoginPage() {
                 </div>
               </label>
 
-              {error && <p role="alert" className="border border-[#EDC2B5] bg-[#FFF3EF] px-4 py-3 text-sm font-semibold text-[#8A3E2D]">{error}</p>}
+              {error && <p role="alert" className="border border-[#F1C5C8] bg-[#FFF4F4] px-4 py-3 text-sm font-semibold text-[#9F1D24]">{error}</p>}
 
               <button type="submit" disabled={loading || !supabaseConfigured || submitting || !selectedRole || !email.trim() || !password} className="btn btn-primary w-full justify-center disabled:cursor-not-allowed disabled:opacity-50">
                 {loading ? 'Memeriksa sesi…' : submitting ? 'Memeriksa…' : 'Masuk ke Workspace'}
@@ -163,14 +163,14 @@ export default function LoginPage() {
             </form>
 
             {supabaseConfigured ? (
-              <div className="mt-8 border border-[#CEE0D4] bg-[#F4FAF6] p-4">
-                <p className="text-xs font-extrabold uppercase tracking-[0.1em] text-forest">Supabase Auth aktif</p>
+              <div className="mt-8 border border-[#C9D3EE] bg-[#F3F6FC] p-4">
+                <p className="text-xs font-semibold uppercase tracking-[0.1em] text-forest">Supabase Auth aktif</p>
                 <p className="mt-2 text-xs leading-relaxed text-muted">Gunakan email dan kata sandi akun yang sudah dibuat di Supabase. Role dan status aktif akan divalidasi dari database.</p>
               </div>
             ) : (
-              <div className="mt-8 border border-[#E8D8B7] bg-[#FFF9EC] p-4">
-                <p className="text-xs font-extrabold uppercase tracking-[0.1em] text-[#6F5830]">Supabase belum dikonfigurasi</p>
-                <p className="mt-2 text-xs leading-relaxed text-[#6F5830]">Buat file <strong>.env</strong> dari <strong>.env.example</strong>, lalu isi Project URL dan Publishable Key. Restart <strong>npm run dev</strong> setelah mengubah .env.</p>
+              <div className="mt-8 border border-[#E3E5E8] bg-[#F6F7F9] p-4">
+                <p className="text-xs font-semibold uppercase tracking-[0.1em] text-charcoal">Supabase belum dikonfigurasi</p>
+                <p className="mt-2 text-xs leading-relaxed text-charcoal">Buat file <strong>.env</strong> dari <strong>.env.example</strong>, lalu isi Project URL dan Publishable Key. Restart <strong>npm run dev</strong> setelah mengubah .env.</p>
               </div>
             )}
           </div>

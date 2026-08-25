@@ -1,41 +1,52 @@
-import { ChevronDown } from 'lucide-react'
+import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { mediaAssets } from '../data/mockData'
 import { useSiteContent } from '../prototype/SiteContentContext'
 
 export default function HeroSection() {
-  const { homepage, identity, isSectionVisible } = useSiteContent()
-  const nextAnchor = isSectionVisible('impact') ? '#dampak' : isSectionVisible('activities') ? '#kegiatan' : '#program'
+  const { homepage, identity } = useSiteContent()
 
   return (
-    <section id="beranda" className="relative overflow-hidden scroll-mt-20">
-      <div className="absolute inset-0">
-        <img
-          src={mediaAssets.hero}
-          alt={`Kegiatan ${identity.name}`}
-          className="h-full w-full object-cover"
-          fetchPriority="high"
-          decoding="async"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-forest-deep/62 via-forest-deep/30 to-forest-deep/5" />
-      </div>
+    <section id="beranda" className="scroll-mt-20 bg-white">
+      <div className="container-content grid gap-12 py-14 md:py-18 lg:grid-cols-[.9fr_1.1fr] lg:items-center lg:gap-16 lg:py-24">
+        <div className="max-w-[650px]">
+          <p className="eyebrow text-forest">{identity.name}</p>
+          <h1 className="display-title mt-7 text-charcoal">{homepage.headline}</h1>
+          <p className="lead-copy mt-7">{homepage.subheadline}</p>
 
-      <div className="container-content relative flex min-h-[84vh] flex-col justify-end pb-14 pt-36 sm:min-h-[86vh] md:min-h-[90vh] md:pb-20 md:pt-40">
-        <p className="eyebrow text-sage">Organisasi Pemuda Dusun 3 · Sidodadi</p>
-        <h1 className="mt-4 max-w-3xl whitespace-pre-line text-5xl font-extrabold uppercase leading-[0.94] tracking-[-0.055em] text-offwhite sm:text-6xl md:text-7xl lg:text-8xl">
-          {homepage.headline}
-        </h1>
-        <p className="mt-6 max-w-lg text-base leading-relaxed text-offwhite/85 md:text-lg">{homepage.subheadline}</p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link to="/kegiatan" className="btn btn-primary">{homepage.primaryCta} <ArrowUpRight size={16} /></Link>
+            <Link to="/keuangan" className="btn btn-secondary">{homepage.secondaryCta} <ArrowRight size={16} /></Link>
+          </div>
 
-        <div className="mt-8 flex flex-wrap gap-3">
-          <Link to="/kegiatan" className="btn bg-offwhite text-forest hover:bg-sage">{homepage.primaryCta}</Link>
-          <Link to="/keuangan" className="btn btn-ghost-light">{homepage.secondaryCta}</Link>
+          <div className="mt-12 grid max-w-2xl grid-cols-3 border-y border-border-soft">
+            {[
+              ['Terbuka', 'Informasi warga'],
+              ['Transparan', 'Keuangan jelas'],
+              ['Kolaboratif', 'Bergerak bersama'],
+            ].map(([title, desc], index) => (
+              <div key={title} className={`py-5 ${index > 0 ? 'border-l border-border-soft pl-5' : 'pr-5'}`}>
+                <p className="text-sm font-semibold text-charcoal">{title}</p>
+                <p className="mt-1 text-xs leading-5 text-muted">{desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <a href={nextAnchor} className="group mt-12 inline-flex w-fit items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-offwhite/70 transition-colors hover:text-offwhite md:mt-14">
-          Gulir untuk melihat dampak kami
-          <ChevronDown size={14} className="transition-transform duration-200 group-hover:translate-y-0.5" />
-        </a>
+        <div className="relative">
+          <div className="absolute -left-3 top-8 z-10 h-[70%] w-1 bg-accent" aria-hidden="true" />
+          <figure className="relative overflow-hidden bg-warmwhite">
+            <img src={mediaAssets.hero} alt={`Kegiatan ${identity.name}`} className="aspect-[5/4] w-full object-cover lg:aspect-[4/5]" fetchPriority="high" decoding="async" />
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent px-6 pb-6 pt-20 text-white md:px-8 md:pb-8">
+              <p className="text-[11px] font-semibold uppercase tracking-[.16em] text-white/75">#MulaiDariLingkungan</p>
+              <p className="mt-2 max-w-md text-xl font-semibold leading-snug tracking-[-.03em]">Kegiatan nyata, informasi terbuka, dan kolaborasi warga.</p>
+            </div>
+          </figure>
+          <div className="absolute -bottom-5 right-0 hidden w-52 bg-forest px-5 py-4 text-white md:block">
+            <p className="text-[10px] font-medium uppercase tracking-[.15em] text-white/65">Berbasis di</p>
+            <p className="mt-1 text-sm font-semibold">Dusun 3 Sidodadi</p>
+          </div>
+        </div>
       </div>
     </section>
   )

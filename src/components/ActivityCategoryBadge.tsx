@@ -6,11 +6,11 @@ export default function ActivityCategoryBadge({
   variant?: 'light' | 'dark'
 }) {
   const styles = variant === 'dark'
-    ? 'border-white/30 bg-white/10 text-offwhite'
-    : 'border-forest/20 bg-sage/35 text-forest'
+    ? 'border-white/30 bg-black/10 text-white'
+    : 'border-border-soft bg-white text-forest'
 
   return (
-    <span className={`inline-flex items-center border px-2.5 py-1 text-[0.68rem] font-bold uppercase tracking-[0.12em] ${styles}`}>
+    <span className={`inline-flex items-center border px-2.5 py-1 text-[0.66rem] font-semibold uppercase tracking-[0.12em] ${styles}`}>
       {category}
     </span>
   )

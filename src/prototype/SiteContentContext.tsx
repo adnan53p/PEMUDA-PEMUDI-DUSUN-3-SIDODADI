@@ -57,12 +57,12 @@ interface SiteContentContextValue {
 }
 
 const initialColors: SiteColors = {
-  primary: '#123D32',
-  deep: '#0C2F27',
-  surface: '#FCFCF9',
-  warm: '#F7F5EF',
-  sage: '#DCE5DD',
-  text: '#202622',
+  primary: '#1E3A8A',
+  deep: '#162A63',
+  surface: '#FFFFFF',
+  warm: '#F6F7F9',
+  sage: '#EEF2F7',
+  text: '#171717',
 }
 
 const initialIdentity: SiteIdentity = {

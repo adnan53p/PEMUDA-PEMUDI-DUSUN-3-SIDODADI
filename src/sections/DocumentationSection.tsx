@@ -3,51 +3,30 @@ import { Link } from 'react-router-dom'
 import { documentationImages } from '../data/mockData'
 
 export default function DocumentationSection() {
-  const portrait = documentationImages.find((item) => item.orientation === 'portrait')
-  const landscape = documentationImages.find((item) => item.orientation === 'landscape')
+  const items = documentationImages.slice(0, 4)
+  if (!items.length) return null
 
   return (
-    <section id="dokumentasi" className="bg-offwhite scroll-mt-20">
-      <div className="container-content py-20 md:py-24">
-        <div className="flex flex-wrap items-end justify-between gap-4">
+    <section id="dokumentasi" className="section-rule scroll-mt-20 bg-warmwhite">
+      <div className="container-content section-space">
+        <div className="flex flex-wrap items-end justify-between gap-5">
           <div>
-            <p className="eyebrow text-forest">Dokumentasi</p>
-            <h2 className="mt-3 max-w-2xl text-3xl font-bold tracking-[-0.035em] text-charcoal md:text-4xl">
-              Wajah-wajah di balik setiap kegiatan.
-            </h2>
+            <p className="eyebrow text-forest">Galeri</p>
+            <h2 className="section-title mt-6 max-w-3xl text-charcoal">Dokumentasi yang berbicara lewat foto.</h2>
           </div>
-          <Link to="/dokumentasi" className="text-link text-sm">Lihat Arsip Foto <ArrowUpRight size={16} /></Link>
+          <Link to="/dokumentasi" className="text-link text-sm">Lihat Semua <ArrowUpRight size={16}/></Link>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-[0.9fr_1.4fr] md:items-end md:gap-8">
-          {portrait && (
-            <figure className="group">
-              <div className="overflow-hidden rounded-sm">
-                <img
-                  src={portrait.image}
-                  alt={portrait.caption}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-[26rem] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.015] sm:h-[30rem]"
-                />
+        <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+          {items.map((item, index) => (
+            <figure key={`${item.caption}-${index}`} className="group bg-white">
+              <div className="relative overflow-hidden bg-charcoal">
+                <img src={item.image} alt={item.caption} loading="lazy" className={`w-full object-cover transition-transform duration-700 group-hover:scale-[1.02] ${index === 0 ? 'aspect-[4/5]' : 'aspect-[4/5]'}`}/>
+                <div className="absolute bottom-0 left-0 h-1 w-16 bg-accent" />
               </div>
-              <figcaption className="mt-3 text-sm leading-relaxed text-muted">{portrait.caption}</figcaption>
+              <figcaption className="border-x border-b border-border-soft px-4 py-4 text-sm font-medium leading-6 text-charcoal">{item.caption}</figcaption>
             </figure>
-          )}
-          {landscape && (
-            <figure className="group">
-              <div className="overflow-hidden rounded-sm">
-                <img
-                  src={landscape.image}
-                  alt={landscape.caption}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-64 w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.015] sm:h-96"
-                />
-              </div>
-              <figcaption className="mt-3 text-sm leading-relaxed text-muted">{landscape.caption}</figcaption>
-            </figure>
-          )}
+          ))}
         </div>
       </div>
     </section>
