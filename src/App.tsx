@@ -14,6 +14,7 @@ import ActivitiesPage from './pages/ActivitiesPage'
 import ActivityDetailPage from './pages/ActivityDetailPage'
 import DocumentationPage from './pages/DocumentationPage'
 import FinancePage from './pages/FinancePage'
+import ProgramDetailPage from './pages/ProgramDetailPage'
 import LoginPage from './pages/LoginPage'
 import NotFoundPage from './pages/NotFoundPage'
 import SuperadminDashboard from './pages/internal/SuperadminDashboard'
@@ -48,6 +49,7 @@ function App() {
             <Route path="/kegiatan/:activityId" element={<ActivityDetailPage />} />
             <Route path="/dokumentasi" element={<DocumentationPage />} />
             <Route path="/keuangan" element={<FinancePage />} />
+            <Route path="/bidang/:slug" element={<ProgramDetailPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
 

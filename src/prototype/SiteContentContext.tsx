@@ -4,6 +4,7 @@ import { homepageSectionItems } from '../data/internal/cmsData'
 import { mainNavigation, type NavigationItem } from '../data/navigation'
 import { legalityDocuments, type LegalityDocument } from '../data/organizationData'
 import { fetchSiteMedia, type SiteMediaRecord, type SiteMediaSlot } from '../data/siteMediaRepository'
+import { defaultPublicHomepageContent, fetchPublicHomepageContent, type PublicHomepageManagedContent } from '../data/publicContentRepository'
 
 export interface SiteColors {
   primary: string
@@ -58,6 +59,9 @@ interface SiteContentContextValue {
   setDocuments: (value: ManagedDocument[]) => void
   siteMedia: SiteMediaMap
   refreshSiteMedia: () => Promise<void>
+  managedPublicContent: PublicHomepageManagedContent
+  setManagedPublicContent: (value: PublicHomepageManagedContent) => void
+  refreshManagedPublicContent: () => Promise<void>
   isSectionVisible: (id: string) => boolean
 }
 
@@ -126,6 +130,7 @@ export function SiteContentProvider({ children }: { children: ReactNode }) {
   const [navigation, setNavigation] = useState<ManagedNavigationItem[]>(initialNavigation)
   const [documents, setDocuments] = useState<ManagedDocument[]>(initialDocuments)
   const [siteMedia, setSiteMedia] = useState<SiteMediaMap>(initialSiteMedia)
+  const [managedPublicContent, setManagedPublicContent] = useState<PublicHomepageManagedContent>(defaultPublicHomepageContent)
 
 
   const refreshSiteMedia = async () => {
@@ -142,8 +147,17 @@ export function SiteContentProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  const refreshManagedPublicContent = async () => {
+    try {
+      setManagedPublicContent(await fetchPublicHomepageContent())
+    } catch (error) {
+      console.warn('Konten publik terkelola belum dapat dimuat.', error)
+    }
+  }
+
   useEffect(() => {
     void refreshSiteMedia()
+    void refreshManagedPublicContent()
   }, [])
 
   useEffect(() => {
@@ -171,8 +185,11 @@ export function SiteContentProvider({ children }: { children: ReactNode }) {
     setDocuments,
     siteMedia,
     refreshSiteMedia,
+    managedPublicContent,
+    setManagedPublicContent,
+    refreshManagedPublicContent,
     isSectionVisible: (id: string) => sections.find((section) => section.id === id)?.visible ?? true,
-  }), [identity, homepage, sections, colors, navigation, documents, siteMedia])
+  }), [identity, homepage, sections, colors, navigation, documents, siteMedia, managedPublicContent])
 
   return <SiteContentContext.Provider value={value}>{children}</SiteContentContext.Provider>
 }

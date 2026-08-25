@@ -1,6 +1,7 @@
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useSiteContent } from '../prototype/SiteContentContext'
+import ScrollReveal from '../components/ScrollReveal'
 
 export default function HeroSection() {
   const { homepage, identity, siteMedia } = useSiteContent()
@@ -8,7 +9,7 @@ export default function HeroSection() {
   return (
     <section id="beranda" className="scroll-mt-20 bg-white">
       <div className="container-content grid gap-12 py-14 md:py-18 lg:grid-cols-[.9fr_1.1fr] lg:items-center lg:gap-16 lg:py-24">
-        <div className="max-w-[650px]">
+        <ScrollReveal className="max-w-[650px]" variant="left">
           <p className="eyebrow text-forest">{identity.name}</p>
           <h1 className="display-title mt-7 text-charcoal">{homepage.headline}</h1>
           <p className="lead-copy mt-7">{homepage.subheadline}</p>
@@ -30,12 +31,12 @@ export default function HeroSection() {
               </div>
             ))}
           </div>
-        </div>
+        </ScrollReveal>
 
-        <div className="relative">
+        <ScrollReveal className="relative" variant="scale" delay={140}>
           <div className="absolute -left-3 top-8 z-10 h-[70%] w-1 bg-accent" aria-hidden="true" />
           <figure className="relative overflow-hidden bg-warmwhite">
-            <img src={siteMedia.hero.url} alt={`Kegiatan ${identity.name}`} className="aspect-[5/4] w-full object-cover lg:aspect-[4/5]" fetchPriority="high" decoding="async" />
+            <img src={siteMedia.hero.url} alt={`Kegiatan ${identity.name}`} className="hero-media aspect-[5/4] w-full object-cover lg:aspect-[4/5]" fetchPriority="high" decoding="async" />
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent px-6 pb-6 pt-20 text-white md:px-8 md:pb-8">
               <p className="text-[11px] font-semibold uppercase tracking-[.16em] text-white/75">#MulaiDariLingkungan</p>
               <p className="mt-2 max-w-md text-xl font-semibold leading-snug tracking-[-.03em]">Kegiatan nyata, informasi terbuka, dan kolaborasi warga.</p>
@@ -45,7 +46,7 @@ export default function HeroSection() {
             <p className="text-[10px] font-medium uppercase tracking-[.15em] text-white/65">Berbasis di</p>
             <p className="mt-1 text-sm font-semibold">Dusun 3 Sidodadi</p>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   )

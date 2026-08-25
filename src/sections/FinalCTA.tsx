@@ -1,13 +1,14 @@
 import { ArrowUpRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { buildWhatsAppLink } from '../config/whatsapp'
+import ScrollReveal from '../components/ScrollReveal'
 
 export default function FinalCTA() {
   const joinLink = buildWhatsAppLink('gabung')
   return (
     <section className="section-rule bg-white">
       <div className="container-content py-16 md:py-20">
-        <div className="grid overflow-hidden bg-forest text-white lg:grid-cols-[1fr_auto] lg:items-end">
+        <ScrollReveal variant="scale"><div className="cta-panel grid overflow-hidden bg-forest text-white lg:grid-cols-[1fr_auto] lg:items-end">
           <div className="px-7 py-12 md:px-10 md:py-14 lg:px-14">
             <p className="text-[11px] font-semibold uppercase tracking-[.16em] text-white/65">#MulaiDariLingkungan</p>
             <h2 className="mt-5 max-w-3xl text-4xl font-semibold leading-[1.04] tracking-[-.045em] md:text-5xl">Ruang kecil bisa melahirkan dampak yang besar.</h2>
@@ -19,7 +20,7 @@ export default function FinalCTA() {
               <Link to="/keuangan" className="btn btn-ghost-light">Lihat Transparansi</Link>
             </div>
           </div>
-        </div>
+        </div></ScrollReveal>
       </div>
     </section>
   )
