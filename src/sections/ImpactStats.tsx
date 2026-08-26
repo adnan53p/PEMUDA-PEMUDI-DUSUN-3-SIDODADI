@@ -19,9 +19,9 @@ export default function ImpactStats() {
         <div className="mobile-horizontal-row mt-14 border-y border-border-soft lg:grid lg:grid-cols-4 lg:overflow-visible">
           {impact.stats.map((stat, index) => (
             <ScrollReveal key={stat.id} delay={index * 90} className="mobile-horizontal-item h-full lg:min-w-0">
-              <article className={`h-full py-7 px-5 lg:min-h-[210px] lg:px-6 ${index > 0 ? 'lg:border-l lg:border-border-soft' : ''}`}>
+              <article className={`h-full min-w-0 py-7 px-5 lg:min-h-[210px] lg:px-6 ${index > 0 ? 'lg:border-l lg:border-border-soft' : ''}`}>
                 <p className="text-[11px] font-semibold uppercase tracking-[.15em] text-accent">{stat.label}</p>
-                <p className="mt-7 text-5xl font-semibold tracking-[-.055em] text-charcoal md:text-6xl">{stat.value}</p>
+                <p className="mt-7 break-words text-4xl font-semibold tracking-[-.055em] text-charcoal min-[390px]:text-5xl md:text-6xl">{stat.value}</p>
                 <div className="mt-7 h-0.5 w-9 bg-forest" />
               </article>
             </ScrollReveal>

@@ -26,7 +26,7 @@ export default function ActivityDetailPage() {
 
   return (
     <article className="bg-offwhite">
-      <section className="relative min-h-[64vh] overflow-hidden bg-forest-deep text-offwhite md:min-h-[68vh]">
+      <section className="relative min-h-[54vh] overflow-hidden bg-forest-deep text-offwhite sm:min-h-[64vh] md:min-h-[68vh]">
         <img
           src={activity.image}
           alt={`Suasana ${activity.title}`}
@@ -35,7 +35,7 @@ export default function ActivityDetailPage() {
           decoding="async"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-forest-deep/90 via-forest-deep/48 to-forest-deep/12" />
-        <div className="container-content relative flex min-h-[64vh] flex-col justify-end pb-10 pt-28 md:min-h-[68vh] md:pb-16 md:pt-32">
+        <div className="container-content relative flex min-h-[54vh] flex-col justify-end pb-10 pt-28 sm:min-h-[64vh] md:min-h-[68vh] md:pb-16 md:pt-32">
           <Link to="/kegiatan" className="mb-7 inline-flex w-fit items-center gap-2 text-sm font-semibold text-offwhite/80 transition-colors hover:text-offwhite"><ArrowLeft size={16} /> Semua kegiatan</Link>
           <div className="flex flex-wrap items-center gap-2.5">
             <ActivityStatusBadge status={activity.status} />

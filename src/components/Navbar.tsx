@@ -75,7 +75,7 @@ export default function Navbar() {
           <Link to="/keuangan" className="btn btn-primary !min-h-10 !px-4 !py-2">Transparansi</Link>
         </div>
 
-        <button type="button" aria-label={mobileOpen ? 'Tutup menu' : 'Buka menu'} className="flex h-10 w-10 items-center justify-center border border-border-soft bg-white xl:hidden" onClick={() => setMobileOpen((v) => !v)}>{mobileOpen ? <X size={21}/> : <Menu size={21}/>}</button>
+        <button type="button" aria-label={mobileOpen ? 'Tutup menu' : 'Buka menu'} className="flex h-11 w-11 items-center justify-center border border-border-soft bg-white xl:hidden" onClick={() => setMobileOpen((v) => !v)}>{mobileOpen ? <X size={21}/> : <Menu size={21}/>}</button>
       </div>
 
       {mobileOpen && <div className="border-t border-border-soft bg-white xl:hidden"><nav className="container-content flex flex-col py-4">{visibleNavigation.map((item) => {

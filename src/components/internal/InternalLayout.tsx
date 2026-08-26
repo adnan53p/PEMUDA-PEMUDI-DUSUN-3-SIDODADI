@@ -135,7 +135,7 @@ export default function InternalLayout({ children, title, subtitle }: { children
         <div className="fixed inset-0 z-50 lg:hidden">
           <button type="button" className="absolute inset-0 bg-charcoal/45" aria-label="Tutup menu internal" onClick={() => setMobileOpen(false)} />
           <aside className="relative h-full w-[82%] max-w-xs bg-forest-deep shadow-2xl">
-            <button type="button" onClick={() => setMobileOpen(false)} className="absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-offwhite" aria-label="Tutup menu">
+            <button type="button" onClick={() => setMobileOpen(false)} className="absolute right-3 top-3 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-offwhite" aria-label="Tutup menu">
               <X size={18} />
             </button>
             <SidebarContent onNavigate={() => setMobileOpen(false)} />
@@ -146,7 +146,7 @@ export default function InternalLayout({ children, title, subtitle }: { children
       <div className="lg:pl-64">
         <header className="sticky top-0 z-30 border-b border-border-soft bg-offwhite/95 backdrop-blur-md">
           <div className="flex min-h-16 items-center gap-3 px-3 py-2.5 sm:min-h-18 sm:gap-4 sm:px-6 sm:py-3 lg:px-8">
-            <button type="button" onClick={() => setMobileOpen(true)} className="flex h-10 w-10 items-center justify-center rounded-md border border-border-soft bg-white text-forest lg:hidden" aria-label="Buka menu internal">
+            <button type="button" onClick={() => setMobileOpen(true)} className="flex h-11 w-11 items-center justify-center rounded-md border border-border-soft bg-white text-forest lg:hidden" aria-label="Buka menu internal">
               <Menu size={20} />
             </button>
             <div className="min-w-0 flex-1">
