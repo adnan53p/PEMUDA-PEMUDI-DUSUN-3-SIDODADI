@@ -21,8 +21,8 @@ export default function AdminAuditPage() {
       <div className="mt-6"><AdminPageIntro eyebrow="AUDIT OPERASIONAL" title="Siapa melakukan apa, kapan, dan pada data yang mana." description="Audit log bukan tempat mengedit transaksi. Koreksi dan pembatalan mempertahankan histori lama serta alasan perubahan." /></div>
 
       <section className="mt-5 grid gap-4 md:grid-cols-[1fr_280px]">
-        <div className="border border-border-soft bg-white p-5"><div className="flex items-start gap-3"><ShieldCheck size={19} className="mt-0.5 shrink-0 text-forest" /><div><p className="text-sm font-extrabold text-charcoal">Riwayat tidak dihapus dari UI.</p><p className="mt-1 text-xs leading-relaxed text-muted">Actor ID dan timestamp dicatat bersama tindakan. Saat backend dipasang nanti, log akan dibuat append-only dan dilindungi RLS.</p></div></div></div>
-        <div className="border border-border-soft bg-white p-5"><FileClock size={19} className="text-forest" /><p className="mt-4 text-2xl font-extrabold text-charcoal">{auditLogs.length}</p><p className="mt-1 text-xs text-muted">Catatan audit Supabase</p></div>
+        <div className="border border-border-soft bg-white p-5"><div className="flex items-start gap-3"><ShieldCheck size={19} className="mt-0.5 shrink-0 text-forest" /><div><p className="text-sm font-extrabold text-charcoal">Riwayat aktivitas tersimpan.</p><p className="mt-1 text-xs leading-relaxed text-muted">Setiap tindakan penting dicatat bersama waktu dan pelakunya untuk membantu penelusuran perubahan.</p></div></div></div>
+        <div className="border border-border-soft bg-white p-5"><FileClock size={19} className="text-forest" /><p className="mt-4 text-2xl font-extrabold text-charcoal">{auditLogs.length}</p><p className="mt-1 text-xs text-muted">Catatan aktivitas</p></div>
       </section>
 
       <section className="mt-5 border border-border-soft bg-white">

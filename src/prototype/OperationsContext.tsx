@@ -446,7 +446,7 @@ const initialTransactions: OperationTransaction[] = [
   },
   {
     id: 'trx-hist-0810-iuran', activityId: 'festival-kemerdekaan-2026', activityName: 'Festival Kemerdekaan Dusun 3 Sidodadi 2026', kind: 'income', label: 'Iuran kolektif warga (arsip)', category: 'Iuran', amount: 6_000_000,
-    createdByUserId: 'usr-admin-001', createdByName: 'Admin Organisasi', createdByRole: 'admin', owner: 'Admin Organisasi', date: '10 Agu 2026 · 18:00', dateISO: '2026-08-10', status: 'Terverifikasi', note: 'Data arsip sebelum pencatatan per Humas pada prototype.',
+    createdByUserId: 'usr-admin-001', createdByName: 'Admin Organisasi', createdByRole: 'admin', owner: 'Admin Organisasi', date: '10 Agu 2026 · 18:00', dateISO: '2026-08-10', status: 'Terverifikasi', note: 'Data arsip sebelum pencatatan per Humas.',
   },
   {
     id: 'trx-hist-0712-hadiah', activityId: 'turnamen-futsal-antar-rt', activityName: 'Turnamen Futsal Antar RT', kind: 'expense', label: 'Hadiah Turnamen Futsal Antar RT', category: 'Hadiah', amount: 3_000_000,
@@ -981,7 +981,7 @@ function PrototypeOperationsProvider({ children }: { children: ReactNode }) {
       return nextCover ? remaining.map((item) => item.id === nextCover.id ? { ...item, isCover: true } : item) : remaining
     })
     appendAudit(resolveActor(actor), 'menghapus media kegiatan', `${activity?.name ?? media.activityId} · ${media.title}`, { entityType: 'activity_media', entityId: media.id })
-    return { ok: true, message: 'Media kegiatan dihapus dari daftar prototype.' }
+    return { ok: true, message: 'Media kegiatan berhasil dihapus.' }
   }
 
   const setActivityMediaVisibility = (id: string, publicVisible: boolean, actor?: OperationActor): ActionResult => {
@@ -1226,7 +1226,7 @@ function ProductionOperationsProvider({ children, snapshotMode = 'session' }: { 
     try {
       applySnapshot(await loadCurrentSnapshot())
     } catch (error) {
-      setSyncError(error instanceof Error ? error.message : 'Data Supabase tidak dapat dimuat.')
+      setSyncError(error instanceof Error ? error.message : 'Data tidak dapat dimuat.')
       applySnapshot({ activities: [], assignments: [], collectionTargets: [], communityMembers: [], transactions: [], budgetPlans: [], reports: [], auditLogs: [], committeeMembers: [], activityMedia: [], cashReconciliations: [] })
     } finally {
       setLoading(false)
@@ -1241,7 +1241,7 @@ function ProductionOperationsProvider({ children, snapshotMode = 'session' }: { 
       setSyncError(null)
     } catch (error) {
       // Keep the last known-good public/internal snapshot on background refresh failures.
-      setSyncError(error instanceof Error ? error.message : 'Data Supabase tidak dapat diperbarui.')
+      setSyncError(error instanceof Error ? error.message : 'Data tidak dapat diperbarui.')
     }
   }, [applySnapshot, loadCurrentSnapshot, snapshotReady])
 

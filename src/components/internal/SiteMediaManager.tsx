@@ -53,9 +53,9 @@ export default function SiteMediaManager() {
         <div className="flex items-start gap-3">
           <span className="mt-0.5 flex h-10 w-10 items-center justify-center bg-sage text-forest"><ImagePlus size={18}/></span>
           <div>
-            <p className="eyebrow text-forest">MEDIA WEBSITE · IMAGEKIT</p>
+            <p className="eyebrow text-forest">MEDIA WEBSITE</p>
             <h2 className="mt-2 text-xl font-bold text-charcoal">Ganti foto utama website.</h2>
-            <p className="mt-2 text-xs leading-relaxed text-muted">Foto berikut tersimpan di ImageKit dan metadata-nya di Supabase. Perubahan berlaku untuk semua pengunjung, bukan hanya browser ini.</p>
+            <p className="mt-2 text-xs leading-relaxed text-muted">Kelola foto utama yang tampil di website publik. Perubahan berlaku untuk semua pengunjung.</p>
           </div>
         </div>
       </div>

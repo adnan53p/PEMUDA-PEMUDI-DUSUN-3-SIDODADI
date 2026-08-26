@@ -52,9 +52,9 @@ async function functionErrorMessage(error: unknown, fallback: string) {
 }
 
 async function invokeImageKit(body: FormData | Record<string, unknown>) {
-  if (!supabase) throw new Error('Supabase belum dikonfigurasi.')
+  if (!supabase) throw new Error('Layanan media belum tersedia.')
   const { data, error } = await supabase.functions.invoke(IMAGEKIT_FUNCTION, { body })
-  if (error) throw new Error(await functionErrorMessage(error, 'Layanan media ImageKit gagal dihubungi.'))
+  if (error) throw new Error(await functionErrorMessage(error, 'Layanan media gagal dihubungi.'))
   return data as Record<string, unknown> | null
 }
 
@@ -65,7 +65,7 @@ export async function uploadExternalMedia(input: {
   transactionId?: string
   siteSlot?: 'hero' | 'profile' | 'organization'
 }): Promise<UploadedExternalMedia> {
-  if (!MEDIA_UPLOAD_CONFIGURED) throw new Error('Supabase belum dikonfigurasi sehingga upload ImageKit belum dapat digunakan.')
+  if (!MEDIA_UPLOAD_CONFIGURED) throw new Error('Layanan unggah media belum tersedia.')
 
   const validation = validateFile(input.file, input.scope)
   if (validation) throw new Error(validation)
@@ -85,7 +85,7 @@ export async function uploadExternalMedia(input: {
 
   const data = await invokeImageKit(form) as Partial<UploadedExternalMedia> | null
   if (!data?.url || !data.externalFileId || !data.filePath) {
-    throw new Error('Respons upload ImageKit tidak lengkap.')
+    throw new Error('Unggah media belum berhasil. Silakan coba lagi.')
   }
 
   return {
@@ -119,9 +119,9 @@ export async function deleteExternalMedia(input: {
 export async function fetchExternalMediaBlob(transactionId: string) {
   if (!transactionId) throw new Error('ID transaksi bukti tidak tersedia.')
   const data = await invokeImageKit({ action: 'signed-url', transactionId }) as { signedUrl?: string } | null
-  if (!data?.signedUrl) throw new Error('URL bukti privat ImageKit tidak tersedia.')
+  if (!data?.signedUrl) throw new Error('Bukti transaksi belum tersedia.')
 
   const response = await fetch(data.signedUrl, { cache: 'no-store' })
-  if (!response.ok) throw new Error('Bukti privat ImageKit tidak dapat dibuka.')
+  if (!response.ok) throw new Error('Bukti transaksi tidak dapat dibuka.')
   return response.blob()
 }

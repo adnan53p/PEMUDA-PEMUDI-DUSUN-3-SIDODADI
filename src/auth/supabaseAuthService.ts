@@ -67,7 +67,7 @@ async function loadHumasAssignments(userId: string): Promise<ActivityAssignment[
   ])
 
   if (activityError) throw new Error('Kegiatan penugasan Humas tidak dapat dibaca.')
-  if (permissionError) throw new Error('Permission Humas tidak dapat dibaca.')
+  if (permissionError) throw new Error('Hak tugas Humas tidak dapat dibaca.')
 
   const activities = (rawActivities ?? []) as ActivityRow[]
   const permissions = (rawPermissions ?? []) as PermissionRow[]
@@ -85,7 +85,7 @@ async function loadHumasAssignments(userId: string): Promise<ActivityAssignment[
 }
 
 export async function loadAuthenticatedUser(authUser: User): Promise<AuthUser> {
-  if (!supabase) throw new Error('Supabase belum dikonfigurasi.')
+  if (!supabase) throw new Error('Layanan login belum tersedia.')
 
   const { data: rawProfile, error } = await supabase
     .from('profiles')

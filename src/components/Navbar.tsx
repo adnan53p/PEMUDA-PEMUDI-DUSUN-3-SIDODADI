@@ -71,7 +71,7 @@ export default function Navbar() {
         </nav>
 
         <div className="hidden items-center gap-4 xl:flex">
-          <Link to={workspacePath} className="inline-flex items-center gap-1.5 text-[.79rem] font-medium text-muted transition-colors hover:text-charcoal">{user ? <LayoutDashboard size={15}/> : <LogIn size={15}/>} {user ? 'Workspace' : 'Masuk'}</Link>
+          <Link to={workspacePath} className="inline-flex items-center gap-1.5 text-[.79rem] font-medium text-muted transition-colors hover:text-charcoal">{user ? <LayoutDashboard size={15}/> : <LogIn size={15}/>} {user ? 'Ruang Pengurus' : 'Masuk'}</Link>
           <Link to="/keuangan" className="btn btn-primary !min-h-10 !px-4 !py-2">Transparansi</Link>
         </div>
 
@@ -81,7 +81,7 @@ export default function Navbar() {
       {mobileOpen && <div className="border-t border-border-soft bg-white xl:hidden"><nav className="container-content flex flex-col py-4">{visibleNavigation.map((item) => {
         const active = getItemActive(item, location.pathname, activeSection)
         return <Link key={`${item.kind}-${item.to}`} to={item.to} className={`border-b border-border-soft px-1 py-3 text-sm font-medium ${active ? 'text-forest' : 'text-charcoal'}`}>{item.label}</Link>
-      })}<div className="mt-4 grid grid-cols-2 gap-2"><Link to={workspacePath} className="btn btn-secondary">{user ? 'Workspace' : 'Masuk'}</Link><Link to="/keuangan" className="btn btn-primary">Transparansi</Link></div></nav></div>}
+      })}<div className="mt-4 grid grid-cols-2 gap-2"><Link to={workspacePath} className="btn btn-secondary">{user ? 'Ruang Pengurus' : 'Masuk'}</Link><Link to="/keuangan" className="btn btn-primary">Transparansi</Link></div></nav></div>}
     </header>
   )
 }

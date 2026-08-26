@@ -62,7 +62,7 @@ export default function AdminAccountsPage() {
       <InternalNotice />
       <PrototypeToast message={toast} />
 
-      <PrototypeModal open={createOpen} onClose={() => setCreateOpen(false)} title="Tambah akun Admin" description="Akun dibuat di Supabase Auth dan role Admin diverifikasi server-side sebelum dapat login.">
+      <PrototypeModal open={createOpen} onClose={() => setCreateOpen(false)} title="Tambah akun Admin" description="Buat akun Admin baru dan atur aksesnya.">
         <form onSubmit={submitCreate} className="space-y-4">
           <label className="block"><span className="text-xs font-extrabold uppercase tracking-[0.08em] text-muted">Email login</span><input required type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="admin@email.com" className="mt-2 h-11 w-full border border-border-soft bg-white px-3 text-sm outline-none focus:border-forest" /></label>
           <label className="block"><span className="text-xs font-extrabold uppercase tracking-[0.08em] text-muted">Nama lengkap</span><input required value={fullName} onChange={(event) => setFullName(event.target.value)} className="mt-2 h-11 w-full border border-border-soft bg-white px-3 text-sm outline-none focus:border-forest" /></label>
@@ -71,7 +71,7 @@ export default function AdminAccountsPage() {
             <label className="block"><span className="text-xs font-extrabold uppercase tracking-[0.08em] text-muted">Password awal</span><input required type="password" minLength={6} autoComplete="new-password" value={password} onChange={(event) => setPassword(event.target.value)} className="mt-2 h-11 w-full border border-border-soft bg-white px-3 text-sm outline-none focus:border-forest" /></label>
           </div>
           <label className="block"><span className="text-xs font-extrabold uppercase tracking-[0.08em] text-muted">WhatsApp / Telepon opsional</span><input value={phone} onChange={(event) => setPhone(event.target.value)} className="mt-2 h-11 w-full border border-border-soft bg-white px-3 text-sm outline-none focus:border-forest" /></label>
-          <div className={`border p-4 text-xs leading-relaxed ${productionAccounts ? 'border-[#CEE0D4] bg-[#F4FAF6] text-forest' : 'border-[#E8D8B7] bg-[#FFF9EC] text-[#6F5830]'}`}>{productionAccounts ? 'Mode produksi: pembuatan akun, reset password, dan status aktif diproses melalui Supabase Edge Function yang memverifikasi role Superadmin.' : 'Mode prototype: perubahan akun hanya tersimpan selama sesi browser.'}</div>
+          <div className={`border p-4 text-xs leading-relaxed ${productionAccounts ? 'border-[#CEE0D4] bg-[#F4FAF6] text-forest' : 'border-[#E8D8B7] bg-[#FFF9EC] text-[#6F5830]'}`}>{productionAccounts ? 'Pengelolaan akun aktif. Pembuatan akun, reset kata sandi, dan status akses dapat dilakukan dari halaman ini.' : 'Mode uji aktif. Perubahan akun hanya berlaku sementara.'}</div>
           <div className="flex justify-end gap-2 border-t border-border-soft pt-5"><button type="button" className="btn btn-secondary" onClick={() => setCreateOpen(false)}>Batal</button><button type="submit" disabled={busy} className="btn btn-primary disabled:opacity-50">{busy ? 'Memproses…' : 'Buat Admin'}</button></div>
         </form>
       </PrototypeModal>
@@ -89,7 +89,7 @@ export default function AdminAccountsPage() {
           <button type="button" onClick={() => setCreateOpen(true)} className="btn btn-primary"><UserPlus size={16} /> Tambah Admin</button>
         </div>
         <div className="divide-y divide-border-soft">
-          {accountsLoading && <p className="px-6 py-6 text-sm text-muted">Memuat akun dari Supabase…</p>}
+          {accountsLoading && <p className="px-6 py-6 text-sm text-muted">Memuat akun…</p>}
           {!accountsLoading && adminAccounts.length === 0 && <p className="px-6 py-6 text-sm text-muted">Belum ada akun Admin.</p>}
           {adminAccounts.map((item) => (
             <div key={item.id} className="grid gap-4 px-5 py-5 md:grid-cols-[1fr_0.8fr_auto] md:items-center sm:px-6">
@@ -99,7 +99,7 @@ export default function AdminAccountsPage() {
             </div>
           ))}
         </div>
-        <div className="flex gap-3 border-t border-border-soft bg-warmwhite px-5 py-4 text-xs leading-relaxed text-muted sm:px-6"><ShieldCheck size={16} className="shrink-0 text-forest" /> {productionAccounts ? 'Akun Admin menggunakan Supabase Auth. Secret/service-role tidak pernah disimpan di frontend; operasi sensitif dijalankan server-side.' : 'Mode prototype aktif karena Supabase belum dikonfigurasi.'}</div>
+        <div className="flex gap-3 border-t border-border-soft bg-warmwhite px-5 py-4 text-xs leading-relaxed text-muted sm:px-6"><ShieldCheck size={16} className="shrink-0 text-forest" /> {productionAccounts ? 'Akun Admin dikelola dengan akses terbatas sesuai kewenangan Superadmin.' : 'Mode uji aktif. Hubungi pengelola jika ingin menggunakan data produksi.'}</div>
       </section>
     </InternalLayout>
   )

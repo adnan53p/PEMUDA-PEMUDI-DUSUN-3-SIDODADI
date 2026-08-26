@@ -199,7 +199,7 @@ export async function fetchPublicHomepageContent(): Promise<PublicHomepageManage
 }
 
 export async function savePublicHomepageContent(content: PublicHomepageManagedContent, updatedByUserId: string): Promise<void> {
-  if (!supabase) throw new Error('Supabase belum dikonfigurasi.')
+  if (!supabase) throw new Error('Layanan konten belum tersedia.')
   const { error } = await supabase.from('public_site_content').upsert({
     content_key: 'homepage_managed', content: normalize(content), updated_by_user_id: updatedByUserId, updated_at: new Date().toISOString(),
   }, { onConflict: 'content_key' })

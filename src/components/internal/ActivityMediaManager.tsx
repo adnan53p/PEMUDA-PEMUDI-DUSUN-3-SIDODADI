@@ -11,7 +11,7 @@ interface Props {
 }
 
 function providerLabel(provider: ActivityMediaProvider) {
-  if (provider === 'imagekit') return 'ImageKit'
+  if (provider === 'imagekit') return 'Foto'
   if (provider === 'cloudflare-r2') return 'Cloudflare R2 (legacy)'
   if (provider === 'google-drive') return 'Google Drive'
   return 'YouTube'
@@ -61,7 +61,7 @@ export default function ActivityMediaManager({ activityId, onNotify }: Props) {
       let mediaUrl = url.trim()
       if (type === 'photo') {
         if (!photoFile) {
-          onNotify('Pilih foto yang akan diunggah ke ImageKit.')
+          onNotify('Pilih foto yang akan diunggah.')
           return
         }
         const uploaded = await uploadExternalMedia({ file: photoFile, scope: 'activity-photo', activityId })
@@ -100,14 +100,14 @@ export default function ActivityMediaManager({ activityId, onNotify }: Props) {
     if (item.provider === 'imagekit' && item.externalFileId) {
       try {
         await deleteExternalMedia({ externalFileId: item.externalFileId, scope: 'activity-photo', activityId: item.activityId })
-        onNotify('Media dan file ImageKit berhasil dihapus.')
+        onNotify('Media berhasil dihapus.')
       } catch {
-        onNotify('Metadata media sudah dihapus. File ImageKit belum terhapus; cleanup dapat dilakukan dari Media Library ImageKit.')
+        onNotify('Data media berhasil dihapus, tetapi file sumber belum dapat dihapus otomatis. Hubungi pengelola jika file perlu dibersihkan.')
       }
       return
     }
     if (item.provider === 'imagekit' && !item.externalFileId) {
-      onNotify('Metadata media dihapus. Record ImageKit lama tidak memiliki fileId untuk cleanup otomatis.')
+      onNotify('Data media berhasil dihapus. File lama perlu dibersihkan secara manual oleh pengelola.')
       return
     }
     onNotify(result.message)
@@ -119,7 +119,7 @@ export default function ActivityMediaManager({ activityId, onNotify }: Props) {
         <div>
           <p className="eyebrow text-forest">MEDIA KEGIATAN</p>
           <h3 className="mt-2 text-lg font-extrabold text-charcoal">Cover, galeri foto, dan video per kegiatan</h3>
-          <p className="mt-2 max-w-2xl text-xs leading-relaxed text-muted">Foto diunggah ke ImageKit melalui Supabase Edge Function terautentikasi. Video tetap memakai link YouTube atau Google Drive. Supabase hanya menyimpan metadata, URL, dan fileId; file biner tidak masuk Supabase Storage.</p>
+          <p className="mt-2 max-w-2xl text-xs leading-relaxed text-muted">Tambahkan foto kegiatan atau tautan video. Foto dapat dijadikan sampul dan ditampilkan ke publik.</p>
         </div>
         <div className="flex gap-2 text-xs font-bold text-muted"><span className="border border-border-soft bg-white px-3 py-2">{photoCount} foto</span><span className="border border-border-soft bg-white px-3 py-2">{videoCount} video</span></div>
       </div>
@@ -132,11 +132,11 @@ export default function ActivityMediaManager({ activityId, onNotify }: Props) {
 
         <div className="mt-4 grid gap-4 md:grid-cols-2">
           <label className="block"><span className="text-xs font-extrabold uppercase tracking-[0.08em] text-muted">Judul</span><input required value={title} onChange={(event) => setTitle(event.target.value)} placeholder={type === 'photo' ? 'Contoh: Persiapan panggung' : 'Contoh: Video malam puncak'} className="mt-2 h-11 w-full border border-border-soft bg-offwhite px-3 text-sm outline-none focus:border-forest" /></label>
-          <label className="block"><span className="text-xs font-extrabold uppercase tracking-[0.08em] text-muted">Sumber</span>{type === 'photo' ? <div className="mt-2 flex h-11 items-center border border-border-soft bg-offwhite px-3 text-sm font-bold text-charcoal">ImageKit</div> : <select value={provider} onChange={(event) => setProvider(event.target.value as ActivityMediaProvider)} className="mt-2 h-11 w-full border border-border-soft bg-offwhite px-3 text-sm font-bold outline-none focus:border-forest"><option value="youtube">YouTube</option><option value="google-drive">Google Drive</option></select>}</label>
+          <label className="block"><span className="text-xs font-extrabold uppercase tracking-[0.08em] text-muted">Sumber</span>{type === 'photo' ? <div className="mt-2 flex h-11 items-center border border-border-soft bg-offwhite px-3 text-sm font-bold text-charcoal">Foto</div> : <select value={provider} onChange={(event) => setProvider(event.target.value as ActivityMediaProvider)} className="mt-2 h-11 w-full border border-border-soft bg-offwhite px-3 text-sm font-bold outline-none focus:border-forest"><option value="youtube">YouTube</option><option value="google-drive">Google Drive</option></select>}</label>
         </div>
 
         {type === 'photo' ? <div className="mt-4">
-          <label className="block"><span className="text-xs font-extrabold uppercase tracking-[0.08em] text-muted">Unggah foto ke ImageKit</span><div className="mt-2 flex min-h-12 items-center gap-3 border border-dashed border-border-soft bg-offwhite px-3 py-2"><UploadCloud size={18} className="text-forest" /><input required type="file" accept="image/jpeg,image/png,image/webp" onChange={(event) => setPhotoFile(event.target.files?.[0] ?? null)} className="min-w-0 flex-1 text-xs text-muted" /></div><p className="mt-1 text-[0.68rem] text-muted">JPG/PNG/WebP, maksimal 8 MB. {MEDIA_UPLOAD_CONFIGURED ? 'Upload diproses melalui Edge Function ImageKit.' : 'Supabase belum dikonfigurasi sehingga upload belum aktif.'}</p></label>
+          <label className="block"><span className="text-xs font-extrabold uppercase tracking-[0.08em] text-muted">Unggah foto</span><div className="mt-2 flex min-h-12 items-center gap-3 border border-dashed border-border-soft bg-offwhite px-3 py-2"><UploadCloud size={18} className="text-forest" /><input required type="file" accept="image/jpeg,image/png,image/webp" onChange={(event) => setPhotoFile(event.target.files?.[0] ?? null)} className="min-w-0 flex-1 text-xs text-muted" /></div><p className="mt-1 text-[0.68rem] text-muted">JPG/PNG/WebP, maksimal 8 MB. {MEDIA_UPLOAD_CONFIGURED ? 'Foto siap diunggah.' : 'Layanan unggah foto belum tersedia.'}</p></label>
         </div> : <label className="mt-4 block"><span className="text-xs font-extrabold uppercase tracking-[0.08em] text-muted">URL video</span><input required type="url" value={url} onChange={(event) => setUrl(event.target.value)} placeholder={provider === 'youtube' ? 'https://youtu.be/...' : 'https://drive.google.com/file/d/.../view'} className="mt-2 h-11 w-full border border-border-soft bg-offwhite px-3 text-sm outline-none focus:border-forest" /></label>}
 
         <div className="mt-4 flex flex-col gap-3 border-t border-border-soft pt-4 sm:flex-row sm:items-center sm:justify-between">

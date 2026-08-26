@@ -73,7 +73,7 @@ export function usePublicActivities(): PublicActivity[] {
         location: activity.location,
         summary: activity.summary || content?.summary || 'Kegiatan Pemuda Dusun 3 Sidodadi.',
         description: content?.description ?? [
-          activity.summary || 'Kegiatan ini dikelola melalui workspace kegiatan yang sama dengan data kepanitiaan, keuangan, dan laporan.',
+          activity.summary || 'Kegiatan ini dikelola bersama data kepanitiaan, keuangan, dan laporan.',
           'Informasi publik mengikuti data kegiatan yang dipublikasikan Admin. Data internal yang bersifat pribadi tetap tidak ditampilkan.',
         ],
         image: coverPhoto?.url ?? content?.image ?? FALLBACK_IMAGE,

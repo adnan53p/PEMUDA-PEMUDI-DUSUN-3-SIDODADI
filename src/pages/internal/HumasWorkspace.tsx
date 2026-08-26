@@ -218,7 +218,7 @@ export default function HumasWorkspace() {
     event.preventDefault()
     if (!assignment || !user || !purchaseName.trim() || purchaseTotal <= 0 || purchaseBusy) return
     if (purchaseEvidenceFile && !MEDIA_UPLOAD_CONFIGURED) {
-      showNotice('ImageKit belum siap. Pastikan Edge Function imagekit-media sudah dideploy dan secret ImageKit sudah dipasang.')
+      showNotice('Layanan unggah bukti belum tersedia. Hubungi pengelola website.')
       return
     }
 
@@ -266,7 +266,7 @@ export default function HumasWorkspace() {
             try { await deleteExternalMedia({ externalFileId: uploadedFileId, scope: 'transaction-evidence', activityId: assignment.activityId, transactionId: result.id }) } catch { /* cleanup best effort */ }
             evidenceMessage = ` Transaksi tersimpan, tetapi bukti gagal ditautkan: ${attachResult.message}`
           } else {
-            evidenceMessage = ' Bukti ImageKit juga berhasil dilampirkan.'
+            evidenceMessage = ' Bukti transaksi juga berhasil dilampirkan.'
           }
         } catch (error) {
           evidenceMessage = ` Transaksi tersimpan, tetapi upload bukti gagal: ${error instanceof Error ? error.message : 'kesalahan upload'}`
@@ -279,7 +279,7 @@ export default function HumasWorkspace() {
       setPurchaseQuantity('1')
       setPurchaseUnitPrice('')
       setPurchaseEvidenceFile(null)
-      showNotice(`Pembelanjaan tersimpan di Supabase. Setelah diverifikasi Admin, nominal otomatis menjadi realisasi RAB sesuai kategori.${evidenceMessage}`)
+      showNotice(`Pembelanjaan berhasil disimpan. Setelah diverifikasi Admin, nominal otomatis menjadi realisasi RAB sesuai kategori.${evidenceMessage}`)
     } finally {
       setPurchaseBusy(false)
     }
@@ -352,7 +352,7 @@ export default function HumasWorkspace() {
 
 
   return (
-    <InternalLayout title="Workspace Humas" subtitle="Dibuat mobile-first untuk penarikan, belanja, dan serah terima kas di lapangan.">
+    <InternalLayout title="Ruang Kerja Humas" subtitle="Untuk penarikan iuran, belanja, dan serah terima kas di lapangan.">
       <div className="mx-auto max-w-5xl">
         <InternalNotice />
         {currentActivity?.financialLocked && <div className="mt-4 border border-[#D7B4B0] bg-[#FFF3F1] px-4 py-3 text-xs font-semibold text-[#8A473E]">Kegiatan sudah selesai dan LPJ disahkan. Pencatatan transaksi baru dikunci sampai Admin membuka kembali kegiatan untuk koreksi.</div>}
@@ -396,7 +396,7 @@ export default function HumasWorkspace() {
             <div className="grid gap-4 sm:grid-cols-2">
               <label className="block"><span className="text-xs font-extrabold uppercase tracking-[0.08em] text-muted">Metode pembayaran</span><select value={purchasePaymentMethod} onChange={(event) => setPurchasePaymentMethod(event.target.value)} className="mt-2 h-12 w-full border border-border-soft bg-white px-3 text-sm font-semibold outline-none focus:border-forest"><option>Tunai</option><option>Transfer</option><option>QRIS</option><option>Lainnya</option></select></label>
               <label className="block"><span className="text-xs font-extrabold uppercase tracking-[0.08em] text-muted">Sumber dana</span><select value={purchaseFundingSource} onChange={(event) => setPurchaseFundingSource(event.target.value as typeof purchaseFundingSource)} className="mt-2 h-12 w-full border border-border-soft bg-white px-3 text-sm font-semibold outline-none focus:border-forest"><option>Kas Kegiatan</option><option>Kas Humas</option><option>Uang Pribadi/Reimburse</option><option>Uang Muka</option><option>Lainnya</option></select></label>
-            </div><label className="block"><span className="text-xs font-extrabold uppercase tracking-[0.08em] text-muted">Bukti transaksi (opsional)</span><div className="mt-2 flex min-h-12 items-center gap-3 border border-dashed border-border-soft bg-white px-3 py-2"><UploadCloud size={18} className="text-forest" /><input type="file" accept="image/jpeg,image/png,image/webp,application/pdf" onChange={(event) => setPurchaseEvidenceFile(event.target.files?.[0] ?? null)} className="min-w-0 flex-1 text-xs text-muted" /></div><p className="mt-1 text-[0.68rem] text-muted">JPG/PNG/WebP/PDF, maksimal 8 MB. File privat disimpan di ImageKit; Supabase hanya menyimpan metadata, URL, dan fileId.</p></label><div className="grid gap-4 sm:grid-cols-1">
+            </div><label className="block"><span className="text-xs font-extrabold uppercase tracking-[0.08em] text-muted">Bukti transaksi (opsional)</span><div className="mt-2 flex min-h-12 items-center gap-3 border border-dashed border-border-soft bg-white px-3 py-2"><UploadCloud size={18} className="text-forest" /><input type="file" accept="image/jpeg,image/png,image/webp,application/pdf" onChange={(event) => setPurchaseEvidenceFile(event.target.files?.[0] ?? null)} className="min-w-0 flex-1 text-xs text-muted" /></div><p className="mt-1 text-[0.68rem] text-muted">JPG/PNG/WebP/PDF, maksimal 8 MB. Bukti hanya dapat diakses oleh pengurus yang berwenang.</p></label><div className="grid gap-4 sm:grid-cols-1">
             </div>
             {(() => { const budget = budgets.find((item) => item.activityId === assignment?.activityId && categoriesMatch(item.category, purchaseCategory)); return budget && budget.realized + purchaseTotal > budget.plan ? <div className="border border-[#E8D8B7] bg-[#FFF9EC] p-3 text-xs font-semibold text-[#6F5830]">Peringatan: jika pembelian ini diverifikasi, realisasi {purchaseCategory} akan melebihi RAB sebesar {formatCurrency((budget.realized + purchaseTotal) - budget.plan)}.</div> : null })()}<button type="submit" disabled={Boolean(currentActivity?.financialLocked) || purchaseBusy} className="btn btn-primary w-full justify-center disabled:opacity-40">{purchaseBusy ? <><LoaderCircle size={16} className="animate-spin" /> Menyimpan...</> : 'Simpan Pembelanjaan'}</button>
           </form>

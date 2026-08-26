@@ -96,7 +96,7 @@ export function validateActivityMediaInput(input: AddActivityMediaInput) {
   }
 
   if (input.type === 'photo' && input.provider !== 'imagekit') {
-    return 'Foto kegiatan baru menggunakan ImageKit.'
+    return 'Foto kegiatan baru menggunakan layanan penyimpanan foto.'
   }
 
   if (input.type === 'video' && !['youtube', 'google-drive'].includes(input.provider)) {

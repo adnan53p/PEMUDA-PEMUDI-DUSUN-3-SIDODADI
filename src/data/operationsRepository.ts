@@ -71,7 +71,7 @@ const mediaProviderToUi: Record<string, ActivityMedia['provider']> = { imagekit:
 const mediaProviderToDb: Record<ActivityMedia['provider'], string> = { imagekit: 'imagekit', 'cloudflare-r2': 'cloudflare_r2', youtube: 'youtube', 'google-drive': 'google_drive' }
 
 function client() {
-  if (!supabase) throw new Error('Supabase belum dikonfigurasi.')
+  if (!supabase) throw new Error('Layanan data belum tersedia.')
   return supabase
 }
 
@@ -392,7 +392,7 @@ export async function createActivity(input: { name: string; dateISO: string; loc
     })
     if (error) throw error
     return success(input.publicVisible ? 'Kegiatan dibuat dan dipublikasikan.' : 'Kegiatan dibuat sebagai kegiatan internal.', String(data))
-  } catch (error) { return failure(error, 'Kegiatan gagal dibuat di Supabase.') }
+  } catch (error) { return failure(error, 'Kegiatan gagal dibuat.') }
 }
 
 export async function updateActivityPhase(id: string, phase: string): Promise<ActionResult> {
@@ -420,7 +420,7 @@ export async function createHumasAssignment(input: { humasUserId: string; activi
       p_activity_id: input.activityId, p_humas_user_id: input.humasUserId, p_area_label: input.area.trim() || 'Tanpa wilayah', p_permissions: dbPermissions,
     })
     if (error) throw error
-    return success('Penugasan Humas berhasil disimpan ke Supabase.', String(data))
+    return success('Penugasan Humas berhasil disimpan.', String(data))
   } catch (error) { return failure(error, 'Penugasan Humas gagal disimpan.') }
 }
 
@@ -562,7 +562,7 @@ export async function attachTransactionEvidence(transactionId: string, input: { 
     })
     if (error) throw error
     return success('Bukti transaksi berhasil dilampirkan.')
-  } catch (error) { return failure(error, 'Bukti transaksi gagal disimpan ke Supabase.') }
+  } catch (error) { return failure(error, 'Bukti transaksi gagal disimpan.') }
 }
 
 export async function addFinancialTransaction(input: {
@@ -589,9 +589,9 @@ export async function addFinancialTransaction(input: {
       p_evidence_type: input.evidenceType ?? null,
     })
     if (error) throw error
-    const message = input.kind === 'income' ? (input.category.toLowerCase() === 'iuran' ? 'Iuran diterima Humas dan tersimpan di Supabase.' : 'Pemasukan kegiatan tersimpan sebagai transaksi sah.') : input.kind === 'handover' ? 'Serah kas diajukan dan menunggu konfirmasi Admin.' : 'Pembelanjaan tersimpan dan menunggu verifikasi Admin.'
+    const message = input.kind === 'income' ? (input.category.toLowerCase() === 'iuran' ? 'Iuran diterima Humas dan berhasil disimpan.' : 'Pemasukan kegiatan tersimpan sebagai transaksi sah.') : input.kind === 'handover' ? 'Serah kas diajukan dan menunggu konfirmasi Admin.' : 'Pembelanjaan tersimpan dan menunggu verifikasi Admin.'
     return success(message, String(data))
-  } catch (error) { return failure(error, 'Transaksi gagal disimpan ke Supabase.') }
+  } catch (error) { return failure(error, 'Transaksi gagal disimpan.') }
 }
 
 export async function setFinancialTransactionStatus(id: string, status: 'verified' | 'rejected', reason?: string): Promise<ActionResult> {

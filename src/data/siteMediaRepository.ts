@@ -11,7 +11,7 @@ export interface SiteMediaRecord {
 }
 
 function client() {
-  if (!supabase) throw new Error('Supabase belum dikonfigurasi.')
+  if (!supabase) throw new Error('Layanan media website belum tersedia.')
   return supabase
 }
 

@@ -62,7 +62,7 @@ export default function LoginPage() {
           <div className="max-w-xl py-7 sm:py-10 lg:py-10">
             <p className="eyebrow text-sage">AREA PENGURUS</p>
             <h1 className="mt-4 text-3xl font-semibold leading-tight tracking-[-0.045em] sm:text-4xl lg:mt-5 lg:text-7xl lg:leading-[0.97] lg:tracking-[-0.055em]">Satu ruang kerja untuk kegiatan yang lebih tertib.</h1>
-            <p className="mt-4 max-w-lg text-sm leading-relaxed text-offwhite/68 lg:mt-7 lg:text-base">Superadmin mengelola website dan platform. Admin mengelola operasional organisasi. Humas bekerja di lapangan sesuai kegiatan dan permission yang ditugaskan.</p>
+            <p className="mt-4 max-w-lg text-sm leading-relaxed text-offwhite/68 lg:mt-7 lg:text-base">Superadmin mengelola website. Admin mengelola operasional organisasi. Humas bekerja di lapangan sesuai kegiatan dan tugas yang diberikan.</p>
 
             <div className="mt-5 hidden gap-3 text-sm sm:grid sm:grid-cols-3 lg:mt-10 lg:grid-cols-1 xl:grid-cols-3">
               {['Superadmin · Website', 'Admin · Operasional', 'Humas · Lapangan'].map((item) => (
@@ -90,7 +90,7 @@ export default function LoginPage() {
             <div className="mt-7 sm:mt-10">
               <p className="eyebrow text-forest">LOGIN PENGURUS</p>
               <h2 className="mt-3 text-3xl font-semibold text-charcoal sm:text-4xl">Masuk ke ruang kerja sesuai peran Anda.</h2>
-              <p className="mt-3 text-sm leading-relaxed text-muted">Login menggunakan akun Supabase yang aktif. Hak akses dibaca dari profil dan role server, bukan dari data demo di browser.</p>
+              <p className="mt-3 text-sm leading-relaxed text-muted">Gunakan akun pengurus yang telah diberikan. Hak akses akan menyesuaikan peran akun Anda.</p>
             </div>
 
             <form onSubmit={submit} className="mt-8 space-y-5">
@@ -119,7 +119,7 @@ export default function LoginPage() {
                     )
                   })}
                 </div>
-                <p className="mt-2 text-[0.7rem] leading-relaxed text-muted">Pilihan ini menentukan workspace yang diminta. Hak akses tetap diverifikasi dari role akun di Supabase.</p>
+                <p className="mt-2 text-[0.7rem] leading-relaxed text-muted">Pilih peran sesuai akun yang Anda gunakan.</p>
               </fieldset>
 
               <label className="block">
@@ -158,19 +158,19 @@ export default function LoginPage() {
               {error && <p role="alert" className="border border-[#F1C5C8] bg-[#FFF4F4] px-4 py-3 text-sm font-semibold text-[#9F1D24]">{error}</p>}
 
               <button type="submit" disabled={loading || !supabaseConfigured || submitting || !selectedRole || !email.trim() || !password} className="btn btn-primary w-full justify-center disabled:cursor-not-allowed disabled:opacity-50">
-                {loading ? 'Memeriksa sesi…' : submitting ? 'Memeriksa…' : 'Masuk ke Workspace'}
+                {loading ? 'Memeriksa sesi…' : submitting ? 'Memeriksa…' : 'Masuk ke Ruang Kerja'}
               </button>
             </form>
 
             {supabaseConfigured ? (
               <div className="mt-8 border border-[#C9D3EE] bg-[#F3F6FC] p-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.1em] text-forest">Supabase Auth aktif</p>
-                <p className="mt-2 text-xs leading-relaxed text-muted">Gunakan email dan kata sandi akun yang sudah dibuat di Supabase. Role dan status aktif akan divalidasi dari database.</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.1em] text-forest">Login Pengurus</p>
+                <p className="mt-2 text-xs leading-relaxed text-muted">Masuk menggunakan email dan kata sandi akun pengurus Anda.</p>
               </div>
             ) : (
               <div className="mt-8 border border-[#E3E5E8] bg-[#F6F7F9] p-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.1em] text-charcoal">Supabase belum dikonfigurasi</p>
-                <p className="mt-2 text-xs leading-relaxed text-charcoal">Buat file <strong>.env</strong> dari <strong>.env.example</strong>, lalu isi Project URL dan Publishable Key. Restart <strong>npm run dev</strong> setelah mengubah .env.</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.1em] text-charcoal">Layanan login belum tersedia</p>
+                <p className="mt-2 text-xs leading-relaxed text-charcoal">Hubungi pengelola website untuk mengaktifkan akses pengurus.</p>
               </div>
             )}
           </div>

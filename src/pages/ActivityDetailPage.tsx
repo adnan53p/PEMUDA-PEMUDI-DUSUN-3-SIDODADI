@@ -35,7 +35,7 @@ export default function ActivityDetailPage() {
           decoding="async"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-forest-deep/90 via-forest-deep/48 to-forest-deep/12" />
-        <div className="container-content relative flex min-h-[54vh] flex-col justify-end pb-10 pt-28 sm:min-h-[64vh] md:min-h-[68vh] md:pb-16 md:pt-32">
+        <div className="container-content relative flex min-h-[54vh] flex-col justify-end sm:min-h-[64vh] pb-10 pt-28 md:min-h-[68vh] md:pb-16 md:pt-32">
           <Link to="/kegiatan" className="mb-7 inline-flex w-fit items-center gap-2 text-sm font-semibold text-offwhite/80 transition-colors hover:text-offwhite"><ArrowLeft size={16} /> Semua kegiatan</Link>
           <div className="flex flex-wrap items-center gap-2.5">
             <ActivityStatusBadge status={activity.status} />
@@ -83,7 +83,7 @@ export default function ActivityDetailPage() {
           </div>
           <div className="space-y-6 text-base leading-8 text-charcoal/80 md:text-lg">
             {activity.description.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-            <p className="border-l-2 border-sage pl-5 text-sm text-muted">Angka dan detail mengikuti data kegiatan yang dipublikasikan pengurus dari Supabase.</p>
+            <p className="border-l-2 border-sage pl-5 text-sm text-muted">Angka dan detail mengikuti data kegiatan yang telah dipublikasikan pengurus.</p>
           </div>
         </div>
       </section>
@@ -170,7 +170,7 @@ export default function ActivityDetailPage() {
             <div>
               <p className="eyebrow text-forest">KEPANITIAAN</p>
               <h2 className="mt-4 text-3xl font-extrabold text-charcoal md:text-4xl">Peran jelas, data pribadi tetap dijaga.</h2>
-              <p className="mt-5 text-sm leading-relaxed text-muted">Nama panitia belum dimasukkan karena belum diberikan sebagai data resmi. Struktur peran sudah disiapkan agar nantinya dapat dihubungkan dengan workspace kegiatan.</p>
+              <p className="mt-5 text-sm leading-relaxed text-muted">Nama panitia belum dimasukkan karena belum diberikan sebagai data resmi. Struktur peran sudah disiapkan agar dapat dilengkapi pada pengelolaan kegiatan.</p>
             </div>
             <div className="grid gap-px bg-border-soft sm:grid-cols-2">
               {activity.committeeRoles.map((role, index) => (

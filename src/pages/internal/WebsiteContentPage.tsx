@@ -38,7 +38,7 @@ export default function WebsiteContentPage() {
       setHomepage({ ...draftHomepage })
       setSections(draftSections.map((item) => ({ ...item })))
       setManagedPublicContent(cloneManaged(draftManaged))
-      setNotice('Konten publik dan SEO website berhasil dipublikasikan ke Supabase.')
+      setNotice('Konten publik dan SEO website berhasil dipublikasikan.')
     } catch (error) {
       setNotice(error instanceof Error ? `Gagal publish: ${error.message}` : 'Gagal mempublikasikan konten.')
     } finally {
@@ -175,7 +175,7 @@ export default function WebsiteContentPage() {
 
     <section className="mt-6 border border-border-soft bg-white">
       <div className="border-b border-border-soft px-5 py-5 sm:px-6">
-        <p className="eyebrow text-forest">PENCAPAIAN & TRANSPARANSI · SUPABASE</p>
+        <p className="eyebrow text-forest">PENCAPAIAN & TRANSPARANSI</p>
         <h2 className="mt-2 text-xl font-extrabold text-charcoal">Konten statistik publik.</h2>
         <p className="mt-2 text-xs leading-relaxed text-muted">Judul, deskripsi, label, dan angka dapat diubah tanpa edit source code.</p>
       </div>
@@ -193,7 +193,7 @@ export default function WebsiteContentPage() {
       <div className="border-b border-border-soft px-5 py-5 sm:px-6">
         <p className="eyebrow text-forest">LIMA BIDANG · KONTEN & SEO</p>
         <h2 className="mt-2 text-xl font-extrabold text-charcoal">Kelola section dan halaman detail setiap bidang.</h2>
-        <p className="mt-2 text-xs leading-relaxed text-muted">Setiap kartu di website publik dapat diklik ke /bidang/slug dan memiliki metadata SEO sendiri.</p>
+        <p className="mt-2 text-xs leading-relaxed text-muted">Setiap kartu di website publik dapat dibuka ke halaman detail dan memiliki pengaturan SEO sendiri.</p>
       </div>
       <div className="grid gap-5 p-5 sm:p-6 lg:grid-cols-2">
         <label><span className="mb-2 block text-xs font-bold uppercase tracking-[.08em] text-muted">Label section</span><input value={draftManaged.programs.eyebrow} onChange={(e) => updateProgramSection({ eyebrow: e.target.value })} className={inputClass}/></label>
@@ -217,7 +217,7 @@ export default function WebsiteContentPage() {
               <label><span className="mb-2 block text-xs font-semibold text-muted">SEO Title</span><input value={program.seoTitle} onChange={(e) => updateProgram(index, { seoTitle: e.target.value })} className={inputClass}/></label>
               <label><span className="mb-2 block text-xs font-semibold text-muted">SEO Keywords</span><input value={program.seoKeywords} onChange={(e) => updateProgram(index, { seoKeywords: e.target.value })} className={inputClass}/></label>
               <label className="lg:col-span-2"><span className="mb-2 block text-xs font-semibold text-muted">SEO Description</span><textarea rows={3} value={program.seoDescription} onChange={(e) => updateProgram(index, { seoDescription: e.target.value })} className={textareaClass}/></label>
-              <label className="lg:col-span-2"><span className="mb-2 block text-xs font-semibold text-muted">URL foto ImageKit (opsional)</span><input value={program.imageUrl} onChange={(e) => updateProgram(index, { imageUrl: e.target.value })} placeholder="https://ik.imagekit.io/..." className={inputClass}/></label>
+              <label className="lg:col-span-2"><span className="mb-2 block text-xs font-semibold text-muted">URL foto (opsional)</span><input value={program.imageUrl} onChange={(e) => updateProgram(index, { imageUrl: e.target.value })} placeholder="https://contoh.com/foto.jpg" className={inputClass}/></label>
               <label><span className="mb-2 block text-xs font-semibold text-muted">CTA label (opsional)</span><input value={program.ctaLabel} onChange={(e) => updateProgram(index, { ctaLabel: e.target.value })} className={inputClass}/></label>
               <label><span className="mb-2 block text-xs font-semibold text-muted">CTA URL (opsional)</span><input value={program.ctaUrl} onChange={(e) => updateProgram(index, { ctaUrl: e.target.value })} className={inputClass}/></label>
             </div>

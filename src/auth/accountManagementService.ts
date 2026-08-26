@@ -24,13 +24,13 @@ type AccountActionPayload =
 function normalizeInvokeError(message: string) {
   const normalized = message.toLowerCase()
   if (normalized.includes('failed to send a request') || normalized.includes('function not found') || normalized.includes('404')) {
-    return 'Fungsi Supabase manage-account belum dideploy. Deploy Edge Function sebelum mengelola akun dari aplikasi.'
+    return 'Layanan pengelolaan akun belum tersedia. Hubungi pengelola website.'
   }
-  return 'Pengelolaan akun gagal diproses. Periksa koneksi dan konfigurasi Supabase.'
+  return 'Pengelolaan akun gagal diproses. Periksa koneksi lalu coba lagi.'
 }
 
 async function invokeAccountAction(payload: AccountActionPayload): Promise<ManagedAccountResult> {
-  if (!supabase) return { ok: false, message: 'Supabase belum dikonfigurasi.' }
+  if (!supabase) return { ok: false, message: 'Layanan pengelolaan akun belum tersedia.' }
 
   const { data, error } = await supabase.functions.invoke('manage-account', { body: payload })
   if (error) return { ok: false, message: normalizeInvokeError(error.message) }

@@ -93,7 +93,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (!supabase) {
         return {
           ok: false,
-          message: 'Supabase belum dikonfigurasi. Isi VITE_SUPABASE_URL dan publishable key pada file .env.',
+          message: 'Layanan login belum tersedia. Hubungi pengelola website.',
         }
       }
 

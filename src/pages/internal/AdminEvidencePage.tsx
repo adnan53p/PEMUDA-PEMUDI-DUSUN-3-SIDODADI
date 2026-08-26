@@ -24,7 +24,7 @@ export default function AdminEvidencePage() {
   return (
     <InternalLayout title="Bukti Transaksi" subtitle="Cocokkan setiap nota, bukti transfer, atau serah terima dengan transaksi asalnya.">
       <InternalNotice />
-      <PrototypeModal open={Boolean(selected)} onClose={() => setSelected(null)} title="Preview bukti transaksi" description="File bukti disimpan privat di ImageKit. Supabase hanya menyimpan metadata, URL, dan fileId; akses diberikan melalui signed URL singkat untuk pengurus yang berwenang.">
+      <PrototypeModal open={Boolean(selected)} onClose={() => setSelected(null)} title="Preview bukti transaksi" description="Bukti transaksi hanya dapat dibuka oleh pengurus yang berwenang.">
         {selected && <div><SecureEvidencePreview transactionId={selected.id} url={selected.evidenceUrl} title={selected.evidenceName} mimeType={selected.evidenceType} /><div className="mt-5 grid gap-3 sm:grid-cols-2"><div className="border border-border-soft bg-white p-4"><p className="text-[0.64rem] uppercase tracking-[0.08em] text-muted">Transaksi</p><p className="mt-2 text-sm font-bold text-charcoal">{selected.label}</p></div><div className="border border-border-soft bg-white p-4"><p className="text-[0.64rem] uppercase tracking-[0.08em] text-muted">Nominal</p><p className="mt-2 text-sm font-extrabold text-forest">{formatCurrency(selected.amount)}</p></div></div></div>}
       </PrototypeModal>
 

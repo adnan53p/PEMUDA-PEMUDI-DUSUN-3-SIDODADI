@@ -201,7 +201,7 @@ export function AccountsProvider({ children }: { children: ReactNode }) {
     if (!email || !input.fullName.trim() || !username || !input.password) return { ok: false, message: 'Email, nama, username, dan password wajib diisi.' }
     if (input.password.length < 6) return { ok: false, message: 'Password minimal 6 karakter.' }
     if (baseAccounts.some((account) => account.username.toLowerCase() === username)) return { ok: false, message: 'Username sudah digunakan.' }
-    if (input.assignment.permissions.length === 0) return { ok: false, message: 'Pilih minimal satu permission.' }
+    if (input.assignment.permissions.length === 0) return { ok: false, message: 'Pilih minimal satu tugas.' }
 
     if (SUPABASE_CONFIGURED) {
       const result = await createManagedAccount({
@@ -226,7 +226,7 @@ export function AccountsProvider({ children }: { children: ReactNode }) {
       if (!assignmentResult.ok) {
         return {
           ok: false,
-          message: `${result.message} Akun berhasil dibuat, tetapi penugasan Supabase gagal: ${assignmentResult.message} Tambahkan penugasan dari akun Humas yang sudah ada.`,
+          message: `${result.message} Akun berhasil dibuat, tetapi penugasan belum berhasil: ${assignmentResult.message} Tambahkan penugasan dari akun Humas yang sudah ada.`,
         }
       }
 
@@ -242,7 +242,7 @@ export function AccountsProvider({ children }: { children: ReactNode }) {
         phone: input.phone?.trim() || undefined,
         assignments: [{ id: assignmentId, ...input.assignment }],
       }
-      return { ok: true, message: `${result.message} Penugasan Humas tersimpan di Supabase.`, account }
+      return { ok: true, message: `${result.message} Penugasan Humas berhasil disimpan.`, account }
     }
 
     const id = `usr-humas-${Date.now()}`
@@ -270,7 +270,7 @@ export function AccountsProvider({ children }: { children: ReactNode }) {
     })
     return {
       ok: true,
-      message: 'Akun Humas dibuat dan penugasannya tersimpan pada satu sumber data operasional prototype.',
+      message: 'Akun Humas berhasil dibuat dan penugasannya berhasil disimpan.',
       account: { ...account, assignments: [{ id: assignmentId, ...input.assignment }] },
     }
   }
@@ -319,13 +319,13 @@ export function AccountsProvider({ children }: { children: ReactNode }) {
       assignments: [],
     }
     setBaseAccounts((items) => [...items, account])
-    return { ok: true, message: 'Akun Admin dibuat untuk sesi prototype.', account }
+    return { ok: true, message: 'Akun Admin berhasil dibuat.', account }
   }
 
   const addHumasAssignment = async (input: AddHumasAssignmentInput) => {
     const account = baseAccounts.find((item) => item.id === input.userId && item.role === 'humas')
     if (!account) return { ok: false, message: 'Akun Humas tidak ditemukan.' }
-    if (input.permissions.length === 0) return { ok: false, message: 'Pilih minimal satu permission.' }
+    if (input.permissions.length === 0) return { ok: false, message: 'Pilih minimal satu tugas.' }
     const normalizedArea = input.areaLabel?.trim().toLowerCase() ?? ''
     if (assignments.some((assignment) => assignment.humasUserId === input.userId && assignment.activityId === input.activityId && assignment.area.trim().toLowerCase() === normalizedArea)) {
       return { ok: false, message: 'Humas sudah memiliki penugasan pada kegiatan dan wilayah/tugas ini.' }
@@ -348,7 +348,7 @@ export function AccountsProvider({ children }: { children: ReactNode }) {
       areaLabel: input.areaLabel,
       permissions: input.permissions,
     }
-    return { ok: true, message: SUPABASE_CONFIGURED ? 'Penugasan Humas tersimpan di Supabase.' : 'Penugasan tambahan berhasil diberikan.', assignment }
+    return { ok: true, message: SUPABASE_CONFIGURED ? 'Penugasan Humas berhasil disimpan.' : 'Penugasan tambahan berhasil diberikan.', assignment }
   }
 
   const setRoleActive = async (userId: string, role: Extract<UserRole, 'admin' | 'humas'>, active: boolean): Promise<ActionResult> => {
@@ -368,7 +368,7 @@ export function AccountsProvider({ children }: { children: ReactNode }) {
     if (!baseAccounts.some((item) => item.id === userId && item.role === role)) return { ok: false, message: 'Akun tidak ditemukan.' }
     if (SUPABASE_CONFIGURED) return resetManagedAccountPassword(userId, role, password)
     setBaseAccounts((items) => items.map((item) => item.id === userId && item.role === role ? { ...item, password } : item))
-    return { ok: true, message: 'Password berhasil direset untuk sesi prototype.' }
+    return { ok: true, message: 'Kata sandi berhasil direset.' }
   }
   const resetHumasPassword = (userId: string, password: string) => resetRolePassword(userId, 'humas', password)
   const resetAdminPassword = (userId: string, password: string) => resetRolePassword(userId, 'admin', password)

@@ -44,14 +44,14 @@ const menuItems: MenuItem[] = [
   { label: 'Keuangan', to: '/admin/keuangan', icon: WalletCards, roles: ['admin'] },
   { label: 'Laporan & LPJ', to: '/admin/laporan', icon: FileText, roles: ['admin'] },
 
-  // HUMAS = Field workspace
+  // HUMAS
   { label: 'Beranda Humas', to: '/humas', icon: Home, roles: ['humas'] },
 ]
 
 const workspaceLabels: Record<UserRole, string> = {
-  superadmin: 'Website Management',
+  superadmin: 'Kelola Website',
   admin: 'Operasional Organisasi',
-  humas: 'Workspace Humas',
+  humas: 'Ruang Kerja Humas',
 }
 
 const sidebarLabels: Record<UserRole, string> = {
@@ -150,7 +150,7 @@ export default function InternalLayout({ children, title, subtitle }: { children
               <Menu size={20} />
             </button>
             <div className="min-w-0 flex-1">
-              <p className="text-[0.68rem] font-extrabold uppercase tracking-[0.12em] text-forest">{user ? workspaceLabels[user.role] : 'Workspace Internal'}</p>
+              <p className="text-[0.68rem] font-extrabold uppercase tracking-[0.12em] text-forest">{user ? workspaceLabels[user.role] : 'Ruang Pengurus'}</p>
               <h1 className="truncate text-lg font-extrabold tracking-[-0.025em] text-charcoal sm:text-xl">{title}</h1>
               <p className="hidden text-xs text-muted sm:block">{subtitle}</p>
             </div>

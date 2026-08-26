@@ -50,11 +50,11 @@ export default function SecureEvidencePreview({ transactionId, url, title, mimeT
   }
 
   if (loading) {
-    return <div className="flex min-h-64 items-center justify-center border border-border-soft bg-warmwhite text-sm font-bold text-muted"><LoaderCircle size={20} className="mr-2 animate-spin text-forest" /> Membuka bukti privat ImageKit...</div>
+    return <div className="flex min-h-64 items-center justify-center border border-border-soft bg-warmwhite text-sm font-bold text-muted"><LoaderCircle size={20} className="mr-2 animate-spin text-forest" /> Membuka bukti transaksi...</div>
   }
 
   if (error || !objectUrl) {
-    return <div className="flex min-h-64 items-center justify-center border border-[#E8CBC3] bg-[#FFF6F3] p-6 text-center text-sm font-semibold text-[#93483F]">{error || 'Bukti privat ImageKit tidak dapat dibuka.'}</div>
+    return <div className="flex min-h-64 items-center justify-center border border-[#E8CBC3] bg-[#FFF6F3] p-6 text-center text-sm font-semibold text-[#93483F]">{error || 'Bukti transaksi tidak dapat dibuka.'}</div>
   }
 
   if (mimeType === 'application/pdf') {
