@@ -130,7 +130,7 @@ export default function ActivityDetailPage() {
               ].map(([label, value]) => (
                 <div key={String(label)} className="min-w-0 bg-forest-deep px-5 py-6 md:px-6">
                   <dt className="text-[0.68rem] font-bold uppercase tracking-[0.12em] text-offwhite/55">{label}</dt>
-                  <dd className="mt-3 whitespace-nowrap text-xl font-extrabold tracking-[-0.03em] md:text-2xl">{formatRupiah(Number(value))}</dd>
+                  <dd className="mt-3 break-words text-lg font-extrabold tracking-[-0.03em] min-[390px]:text-xl md:text-2xl">{formatRupiah(Number(value))}</dd>
                 </div>
               ))}
             </dl>

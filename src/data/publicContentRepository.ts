@@ -37,9 +37,32 @@ export interface ProgramsSectionContent {
   programs: ProgramContent[]
 }
 
+export interface SeoPageContent {
+  title: string
+  description: string
+  keywords: string
+}
+
+export interface GlobalSeoContent {
+  siteUrl: string
+  defaultOgImage: string
+  organizationName: string
+  organizationDescription: string
+  pages: {
+    home: SeoPageContent
+    profile: SeoPageContent
+    legality: SeoPageContent
+    organization: SeoPageContent
+    activities: SeoPageContent
+    documentation: SeoPageContent
+    finance: SeoPageContent
+  }
+}
+
 export interface PublicHomepageManagedContent {
   impact: ImpactSectionContent
   programs: ProgramsSectionContent
+  seo: GlobalSeoContent
 }
 
 export const defaultPublicHomepageContent: PublicHomepageManagedContent = {
@@ -53,6 +76,22 @@ export const defaultPublicHomepageContent: PublicHomepageManagedContent = {
       { id: 'program', label: 'Bidang Program', value: '5' },
       { id: 'warga', label: 'Warga Terlibat', value: '600+' },
     ],
+  },
+
+  seo: {
+    siteUrl: 'https://pemudadusun3.my.id',
+    defaultOgImage: '',
+    organizationName: 'Pemuda Dusun 3 Sidodadi',
+    organizationDescription: 'Organisasi kepemudaan Dusun 3 Sidodadi yang aktif, transparan, dan bergerak bersama masyarakat.',
+    pages: {
+      home: { title: 'Pemuda Dusun 3 Sidodadi | Kegiatan, Program & Transparansi', description: 'Website resmi Pemuda Dusun 3 Sidodadi. Informasi kegiatan pemuda, program sosial, organisasi, dokumentasi, dan transparansi keuangan masyarakat.', keywords: 'pemuda dusun 3 sidodadi, pemuda sidodadi, kegiatan pemuda, organisasi pemuda' },
+      profile: { title: 'Profil | Pemuda Dusun 3 Sidodadi', description: 'Mengenal Pemuda Dusun 3 Sidodadi, identitas organisasi, tujuan, dan semangat kebersamaan pemuda di lingkungan Dusun 3 Sidodadi.', keywords: 'profil pemuda dusun 3 sidodadi, organisasi pemuda sidodadi' },
+      legality: { title: 'Keabsahan & Dokumen | Pemuda Dusun 3 Sidodadi', description: 'Informasi keabsahan dan dokumen publik Pemuda Dusun 3 Sidodadi sebagai bagian dari keterbukaan organisasi.', keywords: 'dokumen pemuda dusun 3 sidodadi, keabsahan organisasi pemuda' },
+      organization: { title: 'Kepengurusan | Pemuda Dusun 3 Sidodadi', description: 'Struktur kepengurusan Pemuda Dusun 3 Sidodadi dan informasi organisasi yang menggerakkan kegiatan pemuda serta masyarakat.', keywords: 'kepengurusan pemuda dusun 3 sidodadi, struktur organisasi pemuda' },
+      activities: { title: 'Kegiatan Pemuda | Dusun 3 Sidodadi', description: 'Informasi kegiatan, agenda, dan aktivitas Pemuda Dusun 3 Sidodadi bersama warga dan masyarakat.', keywords: 'kegiatan pemuda sidodadi, agenda dusun 3 sidodadi, kegiatan warga' },
+      documentation: { title: 'Dokumentasi Kegiatan | Pemuda Dusun 3 Sidodadi', description: 'Dokumentasi foto dan publikasi kegiatan Pemuda Dusun 3 Sidodadi.', keywords: 'dokumentasi pemuda sidodadi, foto kegiatan sidodadi' },
+      finance: { title: 'Transparansi Keuangan | Pemuda Dusun 3 Sidodadi', description: 'Lihat transparansi keuangan Pemuda Dusun 3 Sidodadi, meliputi pemasukan, pengeluaran, penggunaan dana kegiatan, dan laporan pertanggungjawaban.', keywords: 'keuangan pemuda dusun 3 sidodadi, transparansi keuangan, laporan keuangan pemuda' },
+    },
   },
   programs: {
     eyebrow: 'Program Pemuda',
@@ -116,6 +155,21 @@ function normalize(raw: any): PublicHomepageManagedContent {
       stats: impactStats.slice(0, 8).map((item: any, index: number) => ({
         id: String(item?.id ?? `stat-${index + 1}`), label: String(item?.label ?? ''), value: String(item?.value ?? ''),
       })),
+    },
+    seo: {
+      siteUrl: String(raw?.seo?.siteUrl ?? fallback.seo.siteUrl).replace(/\/$/, ''),
+      defaultOgImage: String(raw?.seo?.defaultOgImage ?? fallback.seo.defaultOgImage),
+      organizationName: String(raw?.seo?.organizationName ?? fallback.seo.organizationName),
+      organizationDescription: String(raw?.seo?.organizationDescription ?? fallback.seo.organizationDescription),
+      pages: {
+        home: { title: String(raw?.seo?.pages?.home?.title ?? fallback.seo.pages.home.title), description: String(raw?.seo?.pages?.home?.description ?? fallback.seo.pages.home.description), keywords: String(raw?.seo?.pages?.home?.keywords ?? fallback.seo.pages.home.keywords) },
+        profile: { title: String(raw?.seo?.pages?.profile?.title ?? fallback.seo.pages.profile.title), description: String(raw?.seo?.pages?.profile?.description ?? fallback.seo.pages.profile.description), keywords: String(raw?.seo?.pages?.profile?.keywords ?? fallback.seo.pages.profile.keywords) },
+        legality: { title: String(raw?.seo?.pages?.legality?.title ?? fallback.seo.pages.legality.title), description: String(raw?.seo?.pages?.legality?.description ?? fallback.seo.pages.legality.description), keywords: String(raw?.seo?.pages?.legality?.keywords ?? fallback.seo.pages.legality.keywords) },
+        organization: { title: String(raw?.seo?.pages?.organization?.title ?? fallback.seo.pages.organization.title), description: String(raw?.seo?.pages?.organization?.description ?? fallback.seo.pages.organization.description), keywords: String(raw?.seo?.pages?.organization?.keywords ?? fallback.seo.pages.organization.keywords) },
+        activities: { title: String(raw?.seo?.pages?.activities?.title ?? fallback.seo.pages.activities.title), description: String(raw?.seo?.pages?.activities?.description ?? fallback.seo.pages.activities.description), keywords: String(raw?.seo?.pages?.activities?.keywords ?? fallback.seo.pages.activities.keywords) },
+        documentation: { title: String(raw?.seo?.pages?.documentation?.title ?? fallback.seo.pages.documentation.title), description: String(raw?.seo?.pages?.documentation?.description ?? fallback.seo.pages.documentation.description), keywords: String(raw?.seo?.pages?.documentation?.keywords ?? fallback.seo.pages.documentation.keywords) },
+        finance: { title: String(raw?.seo?.pages?.finance?.title ?? fallback.seo.pages.finance.title), description: String(raw?.seo?.pages?.finance?.description ?? fallback.seo.pages.finance.description), keywords: String(raw?.seo?.pages?.finance?.keywords ?? fallback.seo.pages.finance.keywords) },
+      },
     },
     programs: {
       eyebrow: String(raw?.programs?.eyebrow ?? fallback.programs.eyebrow),

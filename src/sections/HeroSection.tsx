@@ -8,7 +8,7 @@ export default function HeroSection() {
 
   return (
     <section id="beranda" className="scroll-mt-20 bg-white">
-      <div className="container-content grid gap-12 py-14 md:py-18 lg:grid-cols-[.9fr_1.1fr] lg:items-center lg:gap-16 lg:py-24">
+      <div className="container-content grid gap-10 py-10 sm:py-14 md:py-18 lg:grid-cols-[.9fr_1.1fr] lg:items-center lg:gap-16 lg:py-24">
         <ScrollReveal className="max-w-[650px]" variant="left">
           <p className="eyebrow text-forest">{identity.name}</p>
           <h1 className="display-title mt-7 text-charcoal">{homepage.headline}</h1>
@@ -25,9 +25,9 @@ export default function HeroSection() {
               ['Transparan', 'Keuangan jelas'],
               ['Kolaboratif', 'Bergerak bersama'],
             ].map(([title, desc], index) => (
-              <div key={title} className={`py-5 ${index > 0 ? 'border-l border-border-soft pl-5' : 'pr-5'}`}>
-                <p className="text-sm font-semibold text-charcoal">{title}</p>
-                <p className="mt-1 text-xs leading-5 text-muted">{desc}</p>
+              <div key={title} className={`py-4 sm:py-5 ${index > 0 ? 'border-l border-border-soft pl-3 sm:pl-5' : 'pr-3 sm:pr-5'}`}>
+                <p className="text-xs font-semibold text-charcoal sm:text-sm">{title}</p>
+                <p className="mt-1 text-[11px] leading-4 text-muted sm:text-xs sm:leading-5">{desc}</p>
               </div>
             ))}
           </div>

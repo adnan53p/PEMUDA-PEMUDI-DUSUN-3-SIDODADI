@@ -49,24 +49,34 @@ export default function OrganizationPage() {
               <p className="mt-4 max-w-md text-sm leading-relaxed text-muted">Nama pengurus belum diberikan sebagai data resmi. Karena itu bagan menampilkan jabatan terlebih dahulu tanpa membuat identitas fiktif.</p>
             </div>
             <div className="overflow-hidden rounded-sm">
-              <img src={siteMedia.organization.url} alt="Kebersamaan pemuda dalam organisasi komunitas" loading="lazy" className="h-56 w-full object-cover md:h-72" />
+              <img src={siteMedia.organization.url} alt="Kebersamaan pemuda dalam organisasi komunitas" loading="lazy" className="h-48 w-full object-cover sm:h-56 md:h-72" />
             </div>
           </div>
 
           <div className="mt-12 border-t border-border-soft pt-8">
             <div className="mb-6 flex items-center gap-2 text-xs text-muted"><Archive size={15} /> Arsip periode sebelumnya disiapkan pada struktur data.</div>
 
-            {/* Mobile hierarchy */}
-            <div className="space-y-3 md:hidden">
-              {organizationRoles.map((role, index) => (
-                <div key={role.id} className="grid grid-cols-[2.25rem_1fr] items-stretch gap-3">
-                  <div className="flex flex-col items-center">
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full border border-forest/20 bg-offwhite text-[0.68rem] font-bold text-forest">{String(index + 1).padStart(2, '0')}</span>
-                    {index < organizationRoles.length - 1 && <span className="mt-1 h-full w-px bg-border-soft" />}
+            {/* Mobile hierarchy: keep leadership readable, compact supporting roles sideways */}
+            <div className="md:hidden">
+              <div className="space-y-3">
+                {[byId.ketua, byId.wakil].map((role, index) => (
+                  <div key={role.id}>
+                    <RoleCard title={role.title} name={role.name} featured={role.id === 'ketua'} compact />
+                    {index === 0 && <div className="mx-auto h-5 w-px bg-border-soft" />}
                   </div>
-                  <RoleCard title={role.title} name={role.name} featured={role.id === 'ketua'} compact />
-                </div>
-              ))}
+                ))}
+              </div>
+              <div className="mt-5 grid grid-cols-2 gap-3">
+                {[byId.sekretaris, byId.bendahara].map((role) => <RoleCard key={role.id} title={role.title} name={role.name} compact />)}
+              </div>
+              <div className="mt-5 flex justify-end"><span className="mobile-swipe-hint">Geser bidang pengurus →</span></div>
+              <div className="mobile-horizontal-row mt-2 gap-3">
+                {[byId.humas, byId.sosial, byId.olahraga, byId.usaha].map((role) => (
+                  <div key={role.id} className="mobile-horizontal-item w-[68vw] max-w-[240px] border-r-0">
+                    <RoleCard title={role.title} name={role.name} compact />
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* Desktop organizational chart */}

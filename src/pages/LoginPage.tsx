@@ -54,17 +54,17 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-offwhite">
       <div className="grid min-h-screen lg:grid-cols-[0.9fr_1.1fr]">
-        <section className="flex flex-col justify-between bg-forest-deep px-6 py-7 text-offwhite sm:px-10 lg:px-14 lg:py-12">
+        <section className="bg-forest-deep px-5 py-5 text-offwhite sm:px-8 sm:py-7 lg:flex lg:flex-col lg:justify-between lg:px-14 lg:py-12">
           <Link to="/" className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-offwhite/75 hover:text-offwhite">
             <ArrowLeft size={17} /> Kembali ke website
           </Link>
 
-          <div className="max-w-xl py-16 lg:py-10">
+          <div className="max-w-xl py-7 sm:py-10 lg:py-10">
             <p className="eyebrow text-sage">AREA PENGURUS</p>
-            <h1 className="mt-5 text-5xl font-semibold leading-[0.97] tracking-[-0.055em] sm:text-6xl lg:text-7xl">Satu ruang kerja untuk kegiatan yang lebih tertib.</h1>
-            <p className="mt-7 max-w-lg text-base leading-relaxed text-offwhite/68">Superadmin mengelola website dan platform. Admin mengelola operasional organisasi. Humas bekerja di lapangan sesuai kegiatan dan permission yang ditugaskan.</p>
+            <h1 className="mt-4 text-3xl font-semibold leading-tight tracking-[-0.045em] sm:text-4xl lg:mt-5 lg:text-7xl lg:leading-[0.97] lg:tracking-[-0.055em]">Satu ruang kerja untuk kegiatan yang lebih tertib.</h1>
+            <p className="mt-4 max-w-lg text-sm leading-relaxed text-offwhite/68 lg:mt-7 lg:text-base">Superadmin mengelola website dan platform. Admin mengelola operasional organisasi. Humas bekerja di lapangan sesuai kegiatan dan permission yang ditugaskan.</p>
 
-            <div className="mt-10 grid gap-3 text-sm sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+            <div className="mt-5 hidden gap-3 text-sm sm:grid sm:grid-cols-3 lg:mt-10 lg:grid-cols-1 xl:grid-cols-3">
               {['Superadmin · Website', 'Admin · Operasional', 'Humas · Lapangan'].map((item) => (
                 <div key={item} className="border border-white/15 px-4 py-4 text-offwhite/75">
                   <ShieldCheck size={18} className="mb-3 text-sage" />
@@ -74,10 +74,10 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <p className="text-xs uppercase tracking-[0.12em] text-offwhite/35">PEMUDA DUSUN 3 SIDODADI · INTERNAL</p>
+          <p className="hidden text-xs uppercase tracking-[0.12em] text-offwhite/35 lg:block">PEMUDA DUSUN 3 SIDODADI · INTERNAL</p>
         </section>
 
-        <section className="flex items-center justify-center px-5 py-10 sm:px-10 lg:px-16">
+        <section className="flex items-start justify-center px-5 py-7 sm:px-10 sm:py-10 lg:items-center lg:px-16">
           <div className="w-full max-w-md">
             <div className="flex items-center gap-3">
               <span className="flex h-11 w-11 items-center justify-center rounded-md bg-forest text-sm font-semibold text-offwhite">PD</span>
@@ -87,7 +87,7 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <div className="mt-10">
+            <div className="mt-7 sm:mt-10">
               <p className="eyebrow text-forest">LOGIN PENGURUS</p>
               <h2 className="mt-3 text-3xl font-semibold text-charcoal sm:text-4xl">Masuk ke ruang kerja sesuai peran Anda.</h2>
               <p className="mt-3 text-sm leading-relaxed text-muted">Login menggunakan akun Supabase yang aktif. Hak akses dibaca dari profil dan role server, bukan dari data demo di browser.</p>

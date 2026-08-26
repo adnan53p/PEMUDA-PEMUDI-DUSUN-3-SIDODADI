@@ -27,13 +27,13 @@ export default function ProfilePage() {
       />
 
       <section className="bg-warmwhite">
-        <div className="container-content grid gap-10 py-14 md:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-14">
+        <div className="container-content grid gap-8 py-10 sm:py-14 md:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-14">
           <div className="overflow-hidden rounded-sm">
             <img
               src={siteMedia.profile.url}
               alt="Kebersamaan pemuda dalam kegiatan komunitas"
               loading="lazy"
-              className="h-[26rem] w-full object-cover md:h-[34rem]"
+              className="h-[20rem] w-full object-cover sm:h-[23rem] md:h-[34rem]"
             />
           </div>
           <div className="pb-2">
@@ -48,7 +48,7 @@ export default function ProfilePage() {
       </section>
 
       <section className="bg-offwhite">
-        <div className="container-content grid gap-8 py-16 md:grid-cols-2 md:py-24">
+        <div className="container-content grid gap-8 py-12 sm:py-16 md:grid-cols-2 md:py-24">
           <div className="border-t border-forest pt-6 md:pr-10">
             <p className="eyebrow text-forest">VISI</p>
             <p className="mt-5 text-2xl font-bold leading-snug text-charcoal md:text-3xl">{organizationProfile.vision}</p>
@@ -68,7 +68,7 @@ export default function ProfilePage() {
       </section>
 
       <section className="bg-forest-deep text-offwhite">
-        <div className="container-content py-16 md:py-24">
+        <div className="container-content py-12 sm:py-16 md:py-24">
           <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
             <div>
               <Quote className="text-sage" size={34} strokeWidth={1.5} />
@@ -91,7 +91,7 @@ export default function ProfilePage() {
       </section>
 
       <section className="bg-warmwhite">
-        <div className="container-content py-16 md:py-24">
+        <div className="container-content py-12 sm:py-16 md:py-24">
           <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16">
             <div>
               <p className="eyebrow text-forest">JEJAK ORGANISASI</p>

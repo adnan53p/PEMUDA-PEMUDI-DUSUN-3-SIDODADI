@@ -40,8 +40,8 @@ export default function ActivitiesSection() {
           <div className="border-t border-border-soft lg:border-t-0">
             {rest.slice(0, 3).map((activity, index) => (
               <ScrollReveal key={activity.id} delay={index * 90} variant="right">
-              <Link to={`/kegiatan/${activity.id}`} className={`group grid grid-cols-[120px_1fr] gap-4 py-5 ${index > 0 ? 'border-t border-border-soft' : ''}`}>
-                <div className="overflow-hidden bg-sage"><img src={activity.image} alt={activity.title} loading="lazy" decoding="async" className="h-28 w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"/></div>
+              <Link to={`/kegiatan/${activity.id}`} className={`group grid grid-cols-[100px_1fr] gap-3 py-5 sm:grid-cols-[120px_1fr] sm:gap-4 ${index > 0 ? 'border-t border-border-soft' : ''}`}>
+                <div className="overflow-hidden bg-sage"><img src={activity.image} alt={activity.title} loading="lazy" decoding="async" className="h-24 w-full object-cover sm:h-28 transition-transform duration-500 group-hover:scale-[1.03]"/></div>
                 <div>
                   <p className="text-[10px] font-semibold uppercase tracking-[.12em] text-accent">{activity.category}</p>
                   <h4 className="mt-2 text-lg font-semibold leading-snug tracking-[-.025em] text-charcoal">{activity.shortTitle}</h4>

@@ -5,7 +5,7 @@ import InternalLayout from '../../components/internal/InternalLayout'
 import InternalNotice from '../../components/internal/InternalNotice'
 import SiteMediaManager from '../../components/internal/SiteMediaManager'
 import { useAuth } from '../../auth/AuthContext'
-import { savePublicHomepageContent, type PublicHomepageManagedContent } from '../../data/publicContentRepository'
+import { savePublicHomepageContent, type PublicHomepageManagedContent, type SeoPageContent } from '../../data/publicContentRepository'
 import { useSiteContent, type HomepageContent, type ManagedHomepageSection } from '../../prototype/SiteContentContext'
 
 const inputClass = 'h-12 w-full border border-border-soft bg-offwhite px-4 text-sm text-charcoal outline-none focus:border-forest'
@@ -38,7 +38,7 @@ export default function WebsiteContentPage() {
       setHomepage({ ...draftHomepage })
       setSections(draftSections.map((item) => ({ ...item })))
       setManagedPublicContent(cloneManaged(draftManaged))
-      setNotice('Konten Pencapaian dan Lima Bidang berhasil dipublikasikan ke Supabase.')
+      setNotice('Konten publik dan SEO website berhasil dipublikasikan ke Supabase.')
     } catch (error) {
       setNotice(error instanceof Error ? `Gagal publish: ${error.message}` : 'Gagal mempublikasikan konten.')
     } finally {
@@ -63,6 +63,20 @@ export default function WebsiteContentPage() {
     setDraftManaged((current) => ({ ...current, programs: { ...current.programs, ...patch } }))
   }
 
+  const updateSeo = (patch: Partial<PublicHomepageManagedContent['seo']>) => {
+    setDraftManaged((current) => ({ ...current, seo: { ...current.seo, ...patch } }))
+  }
+
+  const updateSeoPage = (key: keyof PublicHomepageManagedContent['seo']['pages'], patch: Partial<SeoPageContent>) => {
+    setDraftManaged((current) => ({
+      ...current,
+      seo: {
+        ...current.seo,
+        pages: { ...current.seo.pages, [key]: { ...current.seo.pages[key], ...patch } },
+      },
+    }))
+  }
+
   const updateProgram = (index: number, patch: Partial<PublicHomepageManagedContent['programs']['programs'][number]>) => {
     setDraftManaged((current) => {
       const programs = current.programs.programs.map((item, itemIndex) => itemIndex === index ? { ...item, ...patch } : item)
@@ -85,11 +99,11 @@ export default function WebsiteContentPage() {
   return <InternalLayout title="Konten Website" subtitle="Kelola konten publik, statistik, lima bidang, detail program, dan SEO dari satu tempat.">
     <InternalNotice />
     {notice && <div role="status" className="mt-5 border border-[#E8D8B7] bg-[#FFF9EC] px-4 py-3 text-xs font-semibold text-[#6F5830]">{notice}</div>}
-    <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border border-border-soft bg-white px-4 py-3">
+    <div className="sticky top-16 z-20 mt-4 flex flex-wrap items-center justify-between gap-3 border border-border-soft bg-white/95 px-3 py-3 shadow-sm backdrop-blur sm:top-18 sm:mt-5 sm:px-4">
       <p className="text-xs font-semibold text-muted"><strong className="text-charcoal">Status:</strong> {changed ? 'Ada perubahan Draft yang belum dipublikasikan.' : 'Draft sama dengan versi publik.'}</p>
-      <div className="flex gap-2">
-        <button type="button" onClick={reset} disabled={!changed || saving} className="btn btn-secondary disabled:opacity-40"><RotateCcw size={15}/> Reset Draft</button>
-        <button type="button" onClick={() => void publish()} disabled={!changed || saving} className="btn btn-primary disabled:opacity-40"><Save size={15}/> {saving ? 'Menyimpan...' : 'Publish'}</button>
+      <div className="grid w-full grid-cols-2 gap-2 sm:flex sm:w-auto">
+        <button type="button" onClick={reset} disabled={!changed || saving} className="btn btn-secondary w-full disabled:opacity-40 sm:w-auto"><RotateCcw size={15}/> Reset Draft</button>
+        <button type="button" onClick={() => void publish()} disabled={!changed || saving} className="btn btn-primary w-full disabled:opacity-40 sm:w-auto"><Save size={15}/> {saving ? 'Menyimpan...' : 'Publish'}</button>
       </div>
     </div>
 
@@ -107,6 +121,53 @@ export default function WebsiteContentPage() {
         <div className="border-b border-border-soft px-5 py-5 sm:px-6"><p className="eyebrow text-forest">PREVIEW DRAFT</p><h2 className="mt-2 text-xl font-extrabold text-charcoal">Pratinjau sebelum Publish.</h2></div>
         <div className="bg-forest-deep p-6 text-offwhite sm:p-8"><p className="text-[0.66rem] font-extrabold uppercase tracking-[0.13em] text-sage">ORGANISASI PEMUDA DUSUN 3 · SIDODADI</p><p className="mt-6 whitespace-pre-line text-4xl font-extrabold leading-[0.94] tracking-[-0.05em]">{draftHomepage.headline || 'Headline kosong'}</p><p className="mt-5 text-sm leading-relaxed text-offwhite/70">{draftHomepage.subheadline || 'Subheadline kosong'}</p></div>
         <div className="flex flex-wrap gap-3 px-5 py-4 sm:px-6"><Link to="/" className="btn btn-secondary"><Eye size={16}/> Lihat versi publik <ExternalLink size={14}/></Link></div>
+      </div>
+    </section>
+
+
+    <section className="mt-6 border border-border-soft bg-white">
+      <div className="border-b border-border-soft px-5 py-5 sm:px-6">
+        <p className="eyebrow text-forest">SEO WEBSITE · GLOBAL</p>
+        <h2 className="mt-2 text-xl font-extrabold text-charcoal">Atur tampilan website di Google dan saat link dibagikan.</h2>
+        <p className="mt-2 max-w-3xl text-xs leading-relaxed text-muted">Judul SEO, deskripsi, kata kunci, canonical URL, Open Graph, Twitter Card, dan data Organization akan mengikuti pengaturan ini.</p>
+      </div>
+      <div className="grid gap-4 p-5 sm:p-6 lg:grid-cols-2">
+        <label><span className="mb-2 block text-xs font-semibold text-muted">Domain utama / canonical</span><input value={draftManaged.seo.siteUrl} onChange={(e) => updateSeo({ siteUrl: e.target.value })} placeholder="https://pemudadusun3.my.id" className={inputClass}/></label>
+        <label><span className="mb-2 block text-xs font-semibold text-muted">URL gambar preview default</span><input value={draftManaged.seo.defaultOgImage} onChange={(e) => updateSeo({ defaultOgImage: e.target.value })} placeholder="Kosongkan untuk memakai foto hero" className={inputClass}/></label>
+        <label><span className="mb-2 block text-xs font-semibold text-muted">Nama organisasi</span><input value={draftManaged.seo.organizationName} onChange={(e) => updateSeo({ organizationName: e.target.value })} className={inputClass}/></label>
+        <label><span className="mb-2 block text-xs font-semibold text-muted">Deskripsi organisasi</span><textarea rows={3} value={draftManaged.seo.organizationDescription} onChange={(e) => updateSeo({ organizationDescription: e.target.value })} className={textareaClass}/></label>
+      </div>
+      <div className="divide-y divide-border-soft border-t border-border-soft">
+        {([
+          ['home', 'Beranda', '/'],
+          ['profile', 'Profil', '/profil'],
+          ['legality', 'Keabsahan & Dokumen', '/keabsahan'],
+          ['organization', 'Kepengurusan', '/kepengurusan'],
+          ['activities', 'Kegiatan', '/kegiatan'],
+          ['documentation', 'Dokumentasi', '/dokumentasi'],
+          ['finance', 'Transparansi Keuangan', '/keuangan'],
+        ] as const).map(([key, label, path]) => {
+          const page = draftManaged.seo.pages[key]
+          return (
+            <details key={key} className="p-5 sm:p-6" open={key === 'home'}>
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
+                <div><p className="font-extrabold text-charcoal">{label}</p><p className="mt-1 text-xs text-muted">{path}</p></div>
+                <span className="text-[10px] font-bold uppercase tracking-[.1em] text-forest">Edit SEO</span>
+              </summary>
+              <div className="mt-5 grid gap-4 lg:grid-cols-2">
+                <label className="lg:col-span-2"><span className="mb-2 block text-xs font-semibold text-muted">Judul SEO</span><input value={page.title} onChange={(e) => updateSeoPage(key, { title: e.target.value })} className={inputClass}/><span className="mt-1 block text-[11px] text-muted">Saran: sekitar 50–60 karakter.</span></label>
+                <label className="lg:col-span-2"><span className="mb-2 block text-xs font-semibold text-muted">Deskripsi SEO</span><textarea rows={3} value={page.description} onChange={(e) => updateSeoPage(key, { description: e.target.value })} className={textareaClass}/><span className="mt-1 block text-[11px] text-muted">Saran: sekitar 120–160 karakter dan tetap natural.</span></label>
+                <label className="lg:col-span-2"><span className="mb-2 block text-xs font-semibold text-muted">Kata kunci</span><input value={page.keywords} onChange={(e) => updateSeoPage(key, { keywords: e.target.value })} placeholder="pisahkan dengan koma" className={inputClass}/></label>
+                <div className="lg:col-span-2 border border-border-soft bg-warmwhite p-4">
+                  <p className="text-[11px] font-bold uppercase tracking-[.1em] text-muted">Preview Google</p>
+                  <p className="mt-3 text-base font-semibold text-[#1A0DAB]">{page.title || 'Judul SEO'}</p>
+                  <p className="mt-1 text-xs text-[#188038]">{draftManaged.seo.siteUrl || 'https://pemudadusun3.my.id'}{path}</p>
+                  <p className="mt-1 max-w-3xl text-sm leading-relaxed text-muted">{page.description || 'Deskripsi SEO akan tampil di sini.'}</p>
+                </div>
+              </div>
+            </details>
+          )
+        })}
       </div>
     </section>
 

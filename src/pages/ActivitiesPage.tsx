@@ -52,7 +52,7 @@ export default function ActivitiesPage() {
                 alt={`Suasana kegiatan ${featured.title}`}
                 fetchPriority="high"
                 decoding="async"
-                className="h-[24rem] w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.015] md:h-[32rem]"
+                className="h-[19rem] w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.015] sm:h-[22rem] md:h-[32rem]"
               />
             </Link>
             <div className="pb-2">
@@ -79,7 +79,7 @@ export default function ActivitiesPage() {
                 </div>
                 <div className="border-l border-border-soft pl-3 py-4">
                   <p className="flex items-center gap-1.5 text-[0.67rem] font-bold uppercase tracking-[0.1em] text-muted"><WalletCards size={14} /> Dana</p>
-                  <p className="mt-2 text-sm font-extrabold text-charcoal sm:text-base">{formatRupiah(featured.finance.income)}</p>
+                  <p className="mt-2 break-words text-[0.72rem] font-extrabold leading-tight text-charcoal min-[390px]:text-sm sm:text-base">{formatRupiah(featured.finance.income)}</p>
                 </div>
               </div>
 

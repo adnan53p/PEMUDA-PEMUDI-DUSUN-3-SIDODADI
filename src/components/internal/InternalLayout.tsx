@@ -145,7 +145,7 @@ export default function InternalLayout({ children, title, subtitle }: { children
 
       <div className="lg:pl-64">
         <header className="sticky top-0 z-30 border-b border-border-soft bg-offwhite/95 backdrop-blur-md">
-          <div className="flex min-h-18 items-center gap-4 px-4 py-3 sm:px-6 lg:px-8">
+          <div className="flex min-h-16 items-center gap-3 px-3 py-2.5 sm:min-h-18 sm:gap-4 sm:px-6 sm:py-3 lg:px-8">
             <button type="button" onClick={() => setMobileOpen(true)} className="flex h-10 w-10 items-center justify-center rounded-md border border-border-soft bg-white text-forest lg:hidden" aria-label="Buka menu internal">
               <Menu size={20} />
             </button>
@@ -164,7 +164,7 @@ export default function InternalLayout({ children, title, subtitle }: { children
           </div>
         </header>
 
-        <main className="px-4 py-6 sm:px-6 lg:px-8 lg:py-8">{children}</main>
+        <main className="px-3 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8">{children}</main>
       </div>
     </div>
   )

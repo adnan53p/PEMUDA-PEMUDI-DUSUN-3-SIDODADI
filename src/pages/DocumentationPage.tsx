@@ -42,7 +42,7 @@ export default function DocumentationPage() {
             </label>
           </div>
 
-          <div className="mt-10 columns-1 gap-5 sm:columns-2 lg:columns-3">
+          <div className="mt-8 columns-2 gap-3 sm:mt-10 sm:gap-5 lg:columns-3">
             {visible.flatMap((activity) => activity.gallery.slice(0, 2).map((image, index) => ({ activity, image, index }))).map(({ activity, image, index }, itemIndex) => (
               <figure key={`${activity.id}-${index}`} className="mb-5 break-inside-avoid overflow-hidden bg-white">
                 <Link to={`/kegiatan/${activity.id}`} className="group block overflow-hidden">
@@ -50,13 +50,13 @@ export default function DocumentationPage() {
                     src={image}
                     alt={`Dokumentasi ${activity.shortTitle}`}
                     loading="lazy"
-                    className={`w-full object-cover transition-transform duration-500 group-hover:scale-[1.015] ${itemIndex % 3 === 0 ? 'h-[30rem]' : itemIndex % 3 === 1 ? 'h-72' : 'h-96'}`}
+                    className={`w-full object-cover transition-transform duration-500 group-hover:scale-[1.015] ${itemIndex % 3 === 0 ? 'h-56 sm:h-[30rem]' : itemIndex % 3 === 1 ? 'h-44 sm:h-72' : 'h-52 sm:h-96'}`}
                   />
                 </Link>
-                <figcaption className="border-x border-b border-border-soft p-5">
+                <figcaption className="border-x border-b border-border-soft p-3 sm:p-5">
                   <p className="text-xs font-bold uppercase tracking-[0.12em] text-forest">{activity.category}</p>
-                  <p className="mt-2 text-base font-extrabold text-charcoal">{activity.shortTitle}</p>
-                  <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-xs text-muted">
+                  <p className="mt-2 text-sm font-extrabold leading-snug text-charcoal sm:text-base">{activity.shortTitle}</p>
+                  <div className="mt-2 hidden flex-wrap gap-x-4 gap-y-2 text-xs text-muted sm:flex">
                     <span className="inline-flex items-center gap-1.5"><CalendarDays size={13} />{activity.date}</span>
                     <span className="inline-flex items-center gap-1.5"><MapPin size={13} />{activity.location}</span>
                   </div>

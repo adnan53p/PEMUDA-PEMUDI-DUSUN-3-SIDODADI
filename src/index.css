@@ -226,3 +226,16 @@
   #dampak .mobile-horizontal-item { width: min(72vw, 280px); }
   #program .mobile-horizontal-item { width: min(82vw, 330px); }
 }
+
+
+/* Phase 05J — mobile UX polish */
+@media (max-width: 639px) {
+  .container-content { padding-inline: 1rem; }
+  .section-space { padding-block: 3.75rem; }
+  .display-title { font-size: clamp(2.5rem, 12vw, 2.8rem); line-height: 1; }
+  .section-title { font-size: clamp(2rem, 9.5vw, 2.55rem); }
+  .mobile-swipe-hint { display: inline-flex; align-items: center; gap: .4rem; font-size: .7rem; font-weight: 600; color: var(--color-muted); }
+  .mobile-compact-card { min-height: 250px !important; }
+}
+
+@media (min-width: 640px) { .mobile-swipe-hint { display: none; } }

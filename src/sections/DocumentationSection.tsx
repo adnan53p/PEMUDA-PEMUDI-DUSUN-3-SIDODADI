@@ -21,9 +21,10 @@ export default function DocumentationSection() {
           <Link to="/dokumentasi" className="text-link text-sm">Lihat Semua <ArrowUpRight size={16}/></Link>
         </ScrollReveal>
 
-        <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-4 flex justify-end md:hidden"><span className="mobile-swipe-hint">Geser galeri →</span></div>
+        <div className="mobile-horizontal-row mt-5 gap-4 md:mt-12 md:grid md:grid-cols-2 md:overflow-visible lg:grid-cols-4">
           {items.map((item, index) => (
-            <ScrollReveal key={`${item.activityId}-${index}`} delay={index * 85}>
+            <ScrollReveal key={`${item.activityId}-${index}`} delay={index * 85} className="mobile-horizontal-item w-[76vw] max-w-[280px] border-r-0 md:w-auto md:max-w-none">
             <figure className="group bg-white">
               <Link to={`/kegiatan/${item.activityId}`} className="block">
                 <div className="relative overflow-hidden bg-charcoal">

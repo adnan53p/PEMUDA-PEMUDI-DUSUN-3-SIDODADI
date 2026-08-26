@@ -1,30 +1,13 @@
-import { useEffect } from 'react'
 import { ArrowLeft, ArrowUpRight } from 'lucide-react'
 import { Link, useParams } from 'react-router-dom'
 import { useSiteContent } from '../prototype/SiteContentContext'
-
-function setMeta(name: string, content: string) {
-  let tag = document.querySelector(`meta[name="${name}"]`) as HTMLMetaElement | null
-  if (!tag) {
-    tag = document.createElement('meta')
-    tag.name = name
-    document.head.appendChild(tag)
-  }
-  tag.content = content
-}
 
 export default function ProgramDetailPage() {
   const { slug } = useParams()
   const { managedPublicContent } = useSiteContent()
   const program = managedPublicContent.programs.programs.find((item) => item.slug === slug && item.visible)
 
-  useEffect(() => {
-    if (!program) return
-    document.title = program.seoTitle || `${program.title} | Pemuda Dusun 3 Sidodadi`
-    setMeta('description', program.seoDescription || program.shortDescription)
-    setMeta('keywords', program.seoKeywords)
-    return () => { document.title = 'Pemuda Dusun 3 Sidodadi' }
-  }, [program])
+
 
   if (!program) {
     return (

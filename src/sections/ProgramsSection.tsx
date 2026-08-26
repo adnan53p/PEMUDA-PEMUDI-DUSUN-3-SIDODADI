@@ -19,21 +19,22 @@ export default function ProgramsSection() {
           <p className="lead-copy lg:justify-self-end">{section.description}</p>
         </ScrollReveal>
 
-        <div className="mobile-horizontal-row mt-14 border-t border-border-soft lg:grid lg:grid-cols-5 lg:overflow-visible">
+        <div className="mt-4 flex justify-end lg:hidden"><span className="mobile-swipe-hint">Geser untuk melihat bidang lainnya →</span></div>
+        <div className="mobile-horizontal-row mt-5 border-t border-border-soft lg:mt-14 lg:grid lg:grid-cols-5 lg:overflow-visible">
           {programs.map((program, index) => (
             <ScrollReveal key={program.id} delay={index * 75} className="mobile-horizontal-item h-full lg:min-w-0">
               <Link
                 to={`/bidang/${program.slug}`}
-                className={`group block h-full min-h-[300px] border-b border-border-soft px-5 py-8 transition-colors hover:bg-warmwhite lg:px-6 lg:border-b-0 ${index > 0 ? 'lg:border-l lg:border-border-soft' : ''}`}
+                className={`group mobile-compact-card block h-full min-h-[300px] border-b border-border-soft px-5 py-8 transition-colors hover:bg-warmwhite lg:px-6 lg:border-b-0 ${index > 0 ? 'lg:border-l lg:border-border-soft' : ''}`}
                 aria-label={`Buka detail bidang ${program.title}`}
               >
                 <div className="flex items-start justify-between gap-4">
                   <span className="text-[11px] font-semibold uppercase tracking-[.15em] text-accent">{program.number}</span>
                   <ArrowUpRight size={17} className="text-muted transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-forest" />
                 </div>
-                <div className="mt-10 h-1 w-10 bg-forest" />
-                <h3 className="mt-6 text-2xl font-semibold leading-tight tracking-[-.035em] text-charcoal">{program.title}</h3>
-                <p className="mt-4 text-sm leading-7 text-muted">{program.shortDescription}</p>
+                <div className="mt-7 h-1 w-10 bg-forest sm:mt-10" />
+                <h3 className="mt-5 text-xl font-semibold sm:mt-6 sm:text-2xl leading-tight tracking-[-.035em] text-charcoal">{program.title}</h3>
+                <p className="mt-3 line-clamp-4 text-sm leading-6 text-muted sm:mt-4 sm:leading-7">{program.shortDescription}</p>
                 <p className="mt-6 text-xs font-semibold uppercase tracking-[.12em] text-forest">Lihat detail</p>
               </Link>
             </ScrollReveal>
